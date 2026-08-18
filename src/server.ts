@@ -1,20 +1,17 @@
 import mongoose, { MongooseError } from "mongoose";
 import app from "./app";
 import env from "./config/env.config";
+import logger from "./utils/logger.util";
 
 async function bootstrapApplication() {
   try {
     await mongoose.connect(env.MONGODB_URI);
-    console.log("Database is connected");
+    logger.info("connected to mongo database");
     app.listen(env.PORT, () => {
-      console.log(`Server is running on port ${env.PORT}`);
+      logger.info(`server is running on port ${env.PORT}`);
     });
   } catch (error) {
-    if (error instanceof MongooseError) {
-      console.log("[Mongoose Connection Error] : ", error.message);
-    } else {
-      console.log("[Internal Server Error] : ", error);
-    }
+    logger.info(error);
     process.exit(1);
   }
 }
