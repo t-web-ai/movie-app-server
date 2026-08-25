@@ -4,8 +4,11 @@ import logger from "../utils/logger.util";
 config({ quiet: true });
 
 const EnvSchema = z.object({
-  PORT: z.coerce.number().min(0).optional().default(3000),
+  PORT: z.coerce.number().int().min(0).optional().default(3000),
   MONGODB_URI: z.string().min(1),
+  SALT_ROUND: z.coerce.number().int().min(1),
+  JWT_SECRET_KEY: z.string().min(1),
+  JWT_EXPIRES_IN: z.string().optional().default("10m"),
 });
 
 type EnvType = z.infer<typeof EnvSchema>;
