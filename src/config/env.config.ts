@@ -9,6 +9,10 @@ const EnvSchema = z.object({
   SALT_ROUND: z.coerce.number().int().min(1),
   JWT_SECRET_KEY: z.string().min(1),
   JWT_EXPIRES_IN: z.string().optional().default("10m"),
+  ENVIORNMENT: z
+    .enum(["developement", "production"])
+    .optional()
+    .default("developement"),
 });
 
 type EnvType = z.infer<typeof EnvSchema>;
