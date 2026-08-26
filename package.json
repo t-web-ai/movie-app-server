@@ -7,7 +7,13 @@
     "start": "node ./dist/server.js",
     "start:dev": "tsx watch ./src/server.ts",
     "seed": "tsx ./src/db/seeds/index.seed.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "lint": "biome lint ./src",
+    "lint:fix": "biome lint --write ./src",
+    "format": "biome format ./src",
+    "format:fix": "biome format --write ./src",
+    "check": "biome check .",
+    "check:fix": "biome check --write ."
   },
   "keywords": [],
   "author": "",
@@ -22,6 +28,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.5.10",
     "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",

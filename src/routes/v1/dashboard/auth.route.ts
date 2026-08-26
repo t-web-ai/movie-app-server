@@ -10,7 +10,7 @@ const authService = new AuthService(adminRepository);
 const authController = new AuthController(authService);
 
 router
-  .route("/login")
-  .post([controllerAsync((req, res) => authController.login(req, res))]);
+	.route("/login")
+	.post([controllerAsync((req, res) => authController.login(req, res))]);
 
 export default router;

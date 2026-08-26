@@ -1,49 +1,49 @@
-import { QueryFilter, Types } from "mongoose";
+import type { QueryFilter, Types } from "mongoose";
 import {
-  Admin,
-  AdminDocument,
-  AdminSchemaType,
+	Admin,
+	type AdminDocument,
+	type AdminSchemaType,
 } from "../db/models/admin.model";
-import { AdminUpdateInput } from "../validators/schemas/admin.schema";
-import { PaginationInput } from "../validators/schemas/pagination.schema";
+import type { AdminUpdateInput } from "../validators/schemas/admin.schema";
+import type { PaginationInput } from "../validators/schemas/pagination.schema";
 
 class AdminRepository {
-  async getAdmin(filter: QueryFilter<AdminDocument>, safe?: boolean) {
-    const admin = await Admin.findOne(filter)
-      .select({ ...(safe && { password: 0 }) })
-      .lean();
-    return admin;
-  }
-  async getAllAdmin(
-    filter: QueryFilter<AdminSchemaType>,
-    paginationInput: PaginationInput,
-  ) {
-    const admins = await Admin.find(filter)
-      .select({
-        password: 0,
-      })
-      .skip((paginationInput.page - 1) * paginationInput.limit)
-      .limit(paginationInput.limit)
-      .lean();
-    return admins;
-  }
-  async getAllAdminCount(filter: QueryFilter<AdminSchemaType>) {
-    return await Admin.countDocuments(filter);
-  }
-  async updateAdmin(
-    filter: QueryFilter<AdminDocument>,
-    data: AdminUpdateInput,
-  ) {
-    const admin = await Admin.findOneAndUpdate(filter, data, {
-      returnDocument: "after",
-    })
-      .select({ password: 0 })
-      .lean();
-    return admin;
-  }
-  async deleteAdmin(id: Types.ObjectId) {
-    return await Admin.findOneAndDelete(id);
-  }
+	async getAdmin(filter: QueryFilter<AdminDocument>, safe?: boolean) {
+		const admin = await Admin.findOne(filter)
+			.select({ ...(safe && { password: 0 }) })
+			.lean();
+		return admin;
+	}
+	async getAllAdmin(
+		filter: QueryFilter<AdminSchemaType>,
+		paginationInput: PaginationInput,
+	) {
+		const admins = await Admin.find(filter)
+			.select({
+				password: 0,
+			})
+			.skip((paginationInput.page - 1) * paginationInput.limit)
+			.limit(paginationInput.limit)
+			.lean();
+		return admins;
+	}
+	async getAllAdminCount(filter: QueryFilter<AdminSchemaType>) {
+		return await Admin.countDocuments(filter);
+	}
+	async updateAdmin(
+		filter: QueryFilter<AdminDocument>,
+		data: AdminUpdateInput,
+	) {
+		const admin = await Admin.findOneAndUpdate(filter, data, {
+			returnDocument: "after",
+		})
+			.select({ password: 0 })
+			.lean();
+		return admin;
+	}
+	async deleteAdmin(id: Types.ObjectId) {
+		return await Admin.findOneAndDelete(id);
+	}
 }
 
 export default AdminRepository;

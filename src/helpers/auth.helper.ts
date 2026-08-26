@@ -1,8 +1,8 @@
-import { Request } from "express";
+import type { Request } from "express";
 
 export function getAuth(request: Request) {
-  if (!request.user) {
-    throw new Error("Unauthorized");
-  }
-  return request.user;
+	if (!request.user) {
+		throw new Error("Unauthorized");
+	}
+	return request.user;
 }
