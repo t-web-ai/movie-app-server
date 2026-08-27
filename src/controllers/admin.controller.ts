@@ -7,7 +7,10 @@ import {
 	buildFilterClause,
 } from "../utils/filters/admin.filter";
 import { validateSchema } from "../utils/validate.util";
-import { AdminUpdateSchema } from "../validators/schemas/admin.schema";
+import {
+	AdminSchema,
+	AdminUpdateSchema,
+} from "../validators/schemas/admin.schema";
 import { PaginationSchema } from "../validators/schemas/pagination.schema";
 import { IdSchema } from "../validators/schemas/param.schema";
 
@@ -62,6 +65,18 @@ class AdminController {
 		return successResponse({
 			response,
 			message: "Delete admin successfully",
+			data,
+			status: HttpStatus.OK,
+		});
+	}
+
+	async createAdmin(request: Request, response: Response) {
+		const { body } = request;
+		const adminInput = validateSchema(AdminSchema, body);
+		const data = await this.adminService.createAdmin(adminInput);
+		return successResponse({
+			response,
+			message: "Create admin successfully",
 			data,
 			status: HttpStatus.OK,
 		});

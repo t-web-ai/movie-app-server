@@ -15,6 +15,11 @@ router
 		controllerAsync((request, response) =>
 			adminController.getAllAdmin(request, response),
 		),
+	])
+	.post([
+		controllerAsync((request, response) =>
+			adminController.createAdmin(request, response),
+		),
 	]);
 
 router

@@ -1,8 +1,12 @@
 import type { QueryFilter, Types } from "mongoose";
 import type { AdminSchemaType } from "../db/models/admin.model";
+import { BadRequestError } from "../helpers/errors/badRequest.error";
 import { NotFoundError } from "../helpers/errors/notFound.error";
 import type AdminRepository from "../repositories/admin.repository";
-import type { AdminUpdateInput } from "../validators/schemas/admin.schema";
+import type {
+	AdminInput,
+	AdminUpdateInput,
+} from "../validators/schemas/admin.schema";
 import type { PaginationInput } from "../validators/schemas/pagination.schema";
 
 class AdminService {
@@ -43,6 +47,13 @@ class AdminService {
 	async deleteAdminById(id: Types.ObjectId) {
 		const admin = await this.adminRepository.deleteAdmin(id);
 		if (!admin) throw new NotFoundError("No Admin");
+		return { admin };
+	}
+
+	async createAdmin(adminInput: AdminInput) {
+		const admin = await this.adminRepository.createAdmin(adminInput);
+		if (!admin) throw new BadRequestError("Faild to create admin");
+
 		return { admin };
 	}
 }

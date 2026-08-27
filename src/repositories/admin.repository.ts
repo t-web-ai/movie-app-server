@@ -4,7 +4,10 @@ import {
 	type AdminDocument,
 	type AdminSchemaType,
 } from "../db/models/admin.model";
-import type { AdminUpdateInput } from "../validators/schemas/admin.schema";
+import type {
+	AdminInput,
+	AdminUpdateInput,
+} from "../validators/schemas/admin.schema";
 import type { PaginationInput } from "../validators/schemas/pagination.schema";
 
 class AdminRepository {
@@ -43,6 +46,11 @@ class AdminRepository {
 	}
 	async deleteAdmin(id: Types.ObjectId) {
 		return await Admin.findOneAndDelete(id);
+	}
+	async createAdmin(adminInput: AdminInput) {
+		const admin = new Admin(adminInput);
+		await admin.save();
+		return admin;
 	}
 }
 
