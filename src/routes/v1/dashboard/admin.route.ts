@@ -3,6 +3,7 @@ import AdminController from "../../../controllers/admin.controller";
 import { controllerAsync } from "../../../middlewares/handlers/controllerAsync.handler";
 import AdminRepository from "../../../repositories/admin.repository";
 import AdminService from "../../../services/admin.service";
+
 const router = Router();
 const adminRepository = new AdminRepository();
 const adminService = new AdminService(adminRepository);
