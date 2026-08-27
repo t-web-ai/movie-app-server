@@ -1,9 +1,9 @@
 import type { ErrorRequestHandler } from "express";
+import { JsonWebTokenError } from "jsonwebtoken";
+import { treeifyError, ZodError } from "zod";
+import { HttpStatus } from "../../config/http.config";
 import { HttpError } from "../../helpers/errors/http.error";
 import { errorResponse } from "../../helpers/response.helper";
-import { treeifyError, ZodError } from "zod";
-import { JsonWebTokenError } from "jsonwebtoken";
-import { HttpStatus } from "../../config/http.config";
 
 export const errorHandler: ErrorRequestHandler = (
 	error,

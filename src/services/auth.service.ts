@@ -1,5 +1,5 @@
-import { HttpStatus } from "../config/http.config";
-import { HttpError } from "../helpers/errors/http.error";
+import { UnauthenticatedError } from "../helpers/errors/auth.error";
+import { NotFoundError } from "../helpers/errors/notFound.error";
 import type AdminRepository from "../repositories/admin.repository";
 import { verifyPassword } from "../utils/bcrypt.util";
 import { generateToken } from "../utils/jwt.util";
@@ -11,14 +11,13 @@ class AuthService {
 		const admin = await this.adminRepository.getAdmin({
 			email: adminLoginInput.email,
 		});
-		if (!admin) throw new HttpError(HttpStatus.NOT_FOUND, "No admin");
+		if (!admin) throw new NotFoundError("No Admin");
 
 		const verified = await verifyPassword(
 			adminLoginInput.password,
 			admin.password,
 		);
-		if (!verified)
-			throw new HttpError(HttpStatus.BAD_REQUEST, "Invalid credentials");
+		if (!verified) throw new UnauthenticatedError("Invalid credentials");
 
 		const token = generateToken({
 			name: admin.name,

@@ -1,7 +1,6 @@
 import type { QueryFilter, Types } from "mongoose";
-import { HttpStatus } from "../config/http.config";
 import type { AdminSchemaType } from "../db/models/admin.model";
-import { HttpError } from "../helpers/errors/http.error";
+import { NotFoundError } from "../helpers/errors/notFound.error";
 import type AdminRepository from "../repositories/admin.repository";
 import type { AdminUpdateInput } from "../validators/schemas/admin.schema";
 import type { PaginationInput } from "../validators/schemas/pagination.schema";
@@ -31,19 +30,19 @@ class AdminService {
 
 	async getSignleAdmin(id: Types.ObjectId) {
 		const admin = await this.adminRepository.getAdmin({ _id: id }, true);
-		if (!admin) throw new HttpError(HttpStatus.NOT_FOUND, "No Admin");
+		if (!admin) throw new NotFoundError("No Admin");
 		return { admin };
 	}
 
 	async updateAdmin(id: Types.ObjectId, data: AdminUpdateInput) {
 		const admin = await this.adminRepository.updateAdmin({ _id: id }, data);
-		if (!admin) throw new HttpError(HttpStatus.NOT_FOUND, "No Admin");
+		if (!admin) throw new NotFoundError("No Admin");
 		return { admin };
 	}
 
 	async deleteAdminById(id: Types.ObjectId) {
 		const admin = await this.adminRepository.deleteAdmin(id);
-		if (!admin) throw new HttpError(HttpStatus.NOT_FOUND, "No Admin");
+		if (!admin) throw new NotFoundError("No Admin");
 		return { admin };
 	}
 }
