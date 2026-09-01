@@ -22,9 +22,10 @@ class AuthService {
 		const token = generateToken({
 			name: admin.name,
 			email: admin.email,
+			role: admin.role,
 		});
 
-		return { token };
+		return { admin, token };
 	}
 }
 

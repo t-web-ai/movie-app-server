@@ -3,6 +3,7 @@ import {
 	type InferSchemaType,
 	model,
 	Schema,
+	Types,
 	type UpdateQuery,
 } from "mongoose";
 import { hashPassword } from "../../utils/bcrypt.util";
@@ -17,6 +18,11 @@ const AdminSchema = new Schema(
 			type: String,
 			required: true,
 			unique: true,
+		},
+		role: {
+			type: Types.ObjectId,
+			ref: "role",
+			required: true,
 		},
 		password: {
 			type: String,

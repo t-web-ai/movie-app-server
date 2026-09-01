@@ -1,19 +1,23 @@
 import type { QueryFilter, Types } from "mongoose";
-import {
-	Admin,
-	type AdminDocument,
-	type AdminSchemaType,
-} from "../db/models/admin.model";
+import { Admin } from "../db/models";
+import type { AdminDocument, AdminSchemaType } from "../db/models/admin.model";
 import type {
 	AdminInput,
 	AdminUpdateInput,
 } from "../validators/schemas/admin.schema";
+import type { AuthUserInput } from "../validators/schemas/auth.schema";
 import type { PaginationInput } from "../validators/schemas/pagination.schema";
 
 class AdminRepository {
 	async getAdmin(filter: QueryFilter<AdminDocument>, safe?: boolean) {
 		const admin = await Admin.findOne(filter)
 			.select({ ...(safe && { password: 0 }) })
+			.populate<AuthUserInput>({
+				path: "role",
+				populate: {
+					path: "permissions",
+				},
+			})
 			.lean();
 		return admin;
 	}
@@ -24,6 +28,12 @@ class AdminRepository {
 		const admins = await Admin.find(filter)
 			.select({
 				password: 0,
+			})
+			.populate({
+				path: "role",
+				populate: {
+					path: "permissions",
+				},
 			})
 			.skip((paginationInput.page - 1) * paginationInput.limit)
 			.limit(paginationInput.limit)

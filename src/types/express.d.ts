@@ -1,4 +1,4 @@
-import { AuthUserInput } from "../validators/schemas/auth.schema";
+import type { AuthUserInput } from "../validators/schemas/auth.schema";
 
 declare global {
 	namespace Express {
