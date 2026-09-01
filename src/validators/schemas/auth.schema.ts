@@ -1,6 +1,7 @@
 import { Types } from "mongoose";
 import z from "zod";
 
+export const ActionSchema = z.enum(["create", "read", "update", "delete"]);
 export const AuthUserSchema = z.object({
 	name: z.string(),
 	email: z.email(),
@@ -16,10 +17,11 @@ export const AuthUserSchema = z.object({
 		permissions: z.array(
 			z.object({
 				resource: z.string(),
-				action: z.enum(["create", "read", "update", "delete"]),
+				action: ActionSchema,
 			}),
 		),
 	}),
 });
 
 export type AuthUserInput = z.infer<typeof AuthUserSchema>;
+export type ActionInput = z.infer<typeof ActionSchema>;

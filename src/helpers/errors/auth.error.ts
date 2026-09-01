@@ -8,3 +8,11 @@ export class UnauthenticatedError extends HttpError {
 		Error.captureStackTrace?.(this, this.constructor);
 	}
 }
+
+export class ForbiddenError extends HttpError {
+	constructor(message: string = "Unauthorized") {
+		super(HttpStatus.FORBIDDEN, message);
+		this.name = this.constructor.name;
+		Error.captureStackTrace?.(this, this.constructor);
+	}
+}
