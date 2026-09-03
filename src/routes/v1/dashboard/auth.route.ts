@@ -1,8 +1,8 @@
 import { Router } from "express";
-import AuthController from "../../../controllers/auth.controller";
+import AuthController from "../../../controllers/dashboard/auth.controller";
 import { controllerAsync } from "../../../middlewares/handlers/controllerAsync.handler";
-import AdminRepository from "../../../repositories/admin.repository";
-import AuthService from "../../../services/auth.service";
+import AdminRepository from "../../../repositories/dashboard/admin.repository";
+import AuthService from "../../../services/dashboard/auth.service";
 
 const router = Router();
 const adminRepository = new AdminRepository();

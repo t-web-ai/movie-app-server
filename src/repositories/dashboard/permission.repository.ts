@@ -1,4 +1,4 @@
-import { Permission } from "../db/models";
+import { Permission } from "../../db/models";
 
 class PermissionRepository {
 	async getAllPermissions() {

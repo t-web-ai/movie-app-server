@@ -1,13 +1,13 @@
 import type { Request, Response } from "express";
-import { successResponse } from "../helpers/response.helper";
-import type RoleService from "../services/role.service";
-import { RoleQuerySchema } from "../utils/filters/role.filter";
-import { validateSchema } from "../utils/validate.util";
-import { IdSchema } from "../validators/schemas/param.schema";
+import { successResponse } from "../../helpers/response.helper";
+import type RoleService from "../../services/dashboard/role.service";
+import { RoleQuerySchema } from "../../utils/filters/role.filter";
+import { validateSchema } from "../../utils/validate.util";
+import { IdSchema } from "../../validators/schemas/param.schema";
 import {
 	RoleCreateSchema,
 	RoleUpdateSchema,
-} from "../validators/schemas/role.schema";
+} from "../../validators/schemas/role.schema";
 
 class RoleController {
 	constructor(private readonly roleService: RoleService) {}

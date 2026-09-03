@@ -1,13 +1,13 @@
 import type { QueryFilter, Types } from "mongoose";
-import type { RoleDocument } from "../db/models/role.model";
-import { ForbiddenError } from "../helpers/errors/auth.error";
-import { BadRequestError } from "../helpers/errors/badRequest.error";
-import { NotFoundError } from "../helpers/errors/notFound.error";
-import type RoleRepository from "../repositories/role.repository";
+import type { RoleDocument } from "../../db/models/role.model";
+import { ForbiddenError } from "../../helpers/errors/auth.error";
+import { BadRequestError } from "../../helpers/errors/badRequest.error";
+import { NotFoundError } from "../../helpers/errors/notFound.error";
+import type RoleRepository from "../../repositories/dashboard/role.repository";
 import type {
 	RoleCreateInput,
 	RoleUpdateInput,
-} from "../validators/schemas/role.schema";
+} from "../../validators/schemas/role.schema";
 
 class RoleService {
 	constructor(private readonly roleRepository: RoleRepository) {}

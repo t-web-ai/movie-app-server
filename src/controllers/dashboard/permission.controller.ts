@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import { successResponse } from "../helpers/response.helper";
-import type PermissionService from "../services/permission.service";
+import { successResponse } from "../../helpers/response.helper";
+import type PermissionService from "../../services/dashboard/permission.service";
 
 class PermissionController {
 	constructor(private readonly permissionService: PermissionService) {}

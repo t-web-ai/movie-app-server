@@ -1,9 +1,9 @@
 import { Router } from "express";
-import RoleController from "../../../controllers/role.controller";
+import RoleController from "../../../controllers/dashboard/role.controller";
 import { controllerAsync } from "../../../middlewares/handlers/controllerAsync.handler";
 import { checkPermission } from "../../../middlewares/permission.middleware";
-import RoleRepository from "../../../repositories/role.repository";
-import RoleService from "../../../services/role.service";
+import RoleRepository from "../../../repositories/dashboard/role.repository";
+import RoleService from "../../../services/dashboard/role.service";
 
 const router = Router();
 const roleRepository = new RoleRepository();

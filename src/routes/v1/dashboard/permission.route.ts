@@ -1,8 +1,8 @@
 import { Router } from "express";
-import PermissionController from "../../../controllers/permission.controller";
+import PermissionController from "../../../controllers/dashboard/permission.controller";
 import { controllerAsync } from "../../../middlewares/handlers/controllerAsync.handler";
-import PermissionRepository from "../../../repositories/permission.repository";
-import PermissionService from "../../../services/permission.service";
+import PermissionRepository from "../../../repositories/dashboard/permission.repository";
+import PermissionService from "../../../services/dashboard/permission.service";
 
 const router = Router();
 const permissionRepository = new PermissionRepository();

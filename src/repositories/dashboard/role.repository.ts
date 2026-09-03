@@ -1,11 +1,11 @@
 import type { QueryFilter, Types } from "mongoose";
-import { Role } from "../db/models";
-import type { RoleDocument, RoleSchemaType } from "../db/models/role.model";
-import type { AdminInput } from "../validators/schemas/admin.schema";
+import { Role } from "../../db/models";
+import type { RoleDocument, RoleSchemaType } from "../../db/models/role.model";
+import type { AdminInput } from "../../validators/schemas/admin.schema";
 import type {
 	RoleCreateInput,
 	RoleUpdateInput,
-} from "../validators/schemas/role.schema";
+} from "../../validators/schemas/role.schema";
 
 class RoleRepository {
 	async getAllRoles(withPermissions?: boolean) {

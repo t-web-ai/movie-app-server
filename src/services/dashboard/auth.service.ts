@@ -1,9 +1,9 @@
-import { UnauthenticatedError } from "../helpers/errors/auth.error";
-import { NotFoundError } from "../helpers/errors/notFound.error";
-import type AdminRepository from "../repositories/admin.repository";
-import { verifyPassword } from "../utils/bcrypt.util";
-import { generateToken } from "../utils/jwt.util";
-import type { AdminLoginInput } from "../validators/schemas/admin.schema";
+import { UnauthenticatedError } from "../../helpers/errors/auth.error";
+import { NotFoundError } from "../../helpers/errors/notFound.error";
+import type AdminRepository from "../../repositories/dashboard/admin.repository";
+import { verifyPassword } from "../../utils/bcrypt.util";
+import { generateToken } from "../../utils/jwt.util";
+import type { AdminLoginInput } from "../../validators/schemas/admin.schema";
 
 class AuthService {
 	constructor(private readonly adminRepository: AdminRepository) {}

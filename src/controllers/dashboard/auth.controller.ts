@@ -1,8 +1,8 @@
 import type { Request, Response } from "express";
-import { successResponse } from "../helpers/response.helper";
-import type AuthService from "../services/auth.service";
-import { validateSchema } from "../utils/validate.util";
-import { AdminLoginSchema } from "../validators/schemas/admin.schema";
+import { successResponse } from "../../helpers/response.helper";
+import type AuthService from "../../services/dashboard/auth.service";
+import { validateSchema } from "../../utils/validate.util";
+import { AdminLoginSchema } from "../../validators/schemas/admin.schema";
 
 class AuthController {
 	constructor(private readonly authService: AuthService) {}

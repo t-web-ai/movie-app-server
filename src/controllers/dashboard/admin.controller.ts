@@ -1,18 +1,18 @@
 import type { Request, Response } from "express";
-import { HttpStatus } from "../config/http.config";
-import { successResponse } from "../helpers/response.helper";
-import type AdminService from "../services/admin.service";
+import { HttpStatus } from "../../config/http.config";
+import { successResponse } from "../../helpers/response.helper";
+import type AdminService from "../../services/dashboard/admin.service";
 import {
 	AdminFilterSchema,
 	buildFilterClause,
-} from "../utils/filters/admin.filter";
-import { validateSchema } from "../utils/validate.util";
+} from "../../utils/filters/admin.filter";
+import { validateSchema } from "../../utils/validate.util";
 import {
 	AdminSchema,
 	AdminUpdateSchema,
-} from "../validators/schemas/admin.schema";
-import { PaginationSchema } from "../validators/schemas/pagination.schema";
-import { IdSchema } from "../validators/schemas/param.schema";
+} from "../../validators/schemas/admin.schema";
+import { PaginationSchema } from "../../validators/schemas/pagination.schema";
+import { IdSchema } from "../../validators/schemas/param.schema";
 
 class AdminController {
 	constructor(private readonly adminService: AdminService) {}

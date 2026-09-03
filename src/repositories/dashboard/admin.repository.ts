@@ -1,12 +1,15 @@
 import type { QueryFilter, Types } from "mongoose";
-import { Admin } from "../db/models";
-import type { AdminDocument, AdminSchemaType } from "../db/models/admin.model";
+import { Admin } from "../../db/models";
+import type {
+	AdminDocument,
+	AdminSchemaType,
+} from "../../db/models/admin.model";
 import type {
 	AdminInput,
 	AdminUpdateInput,
-} from "../validators/schemas/admin.schema";
-import type { AuthUserInput } from "../validators/schemas/auth.schema";
-import type { PaginationInput } from "../validators/schemas/pagination.schema";
+} from "../../validators/schemas/admin.schema";
+import type { AuthUserInput } from "../../validators/schemas/auth.schema";
+import type { PaginationInput } from "../../validators/schemas/pagination.schema";
 
 class AdminRepository {
 	async getAdmin(filter: QueryFilter<AdminDocument>, safe?: boolean) {
