@@ -11,12 +11,12 @@ export const checkPermission = (
 ): RequestHandler => {
 	return (request, _response, next) => {
 		if (!request?.user) throw new UnauthenticatedError();
-		const permission = request.user?.role?.permissions?.find(
-			(permission) => permission.resource === resource,
+		const permission = request.user?.role?.permissions?.some(
+			(permission) =>
+				permission.resource === resource && permission.action === action,
 		);
 
-		if (!permission || permission.action !== action)
-			throw new ForbiddenError("You have no permission");
+		if (!permission) throw new ForbiddenError("You have no permission");
 		next();
 	};
 };
