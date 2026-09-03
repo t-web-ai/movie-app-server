@@ -1,6 +1,7 @@
 import { Router } from "express";
 import RoleController from "../../../controllers/role.controller";
 import { controllerAsync } from "../../../middlewares/handlers/controllerAsync.handler";
+import { checkPermission } from "../../../middlewares/permission.middleware";
 import RoleRepository from "../../../repositories/role.repository";
 import RoleService from "../../../services/role.service";
 
@@ -12,11 +13,13 @@ const roleController = new RoleController(roleService);
 router
 	.route("/")
 	.get([
+		checkPermission("role", "read"),
 		controllerAsync((request, response) =>
 			roleController.getAllRoles(request, response),
 		),
 	])
 	.post([
+		checkPermission("role", "create"),
 		controllerAsync((request, response) =>
 			roleController.createRole(request, response),
 		),
@@ -25,16 +28,19 @@ router
 router
 	.route("/:id")
 	.get([
+		checkPermission("role", "read"),
 		controllerAsync((request, response) =>
 			roleController.getSingleRole(request, response),
 		),
 	])
 	.put([
+		checkPermission("role", "update"),
 		controllerAsync((request, response) =>
 			roleController.updateRole(request, response),
 		),
 	])
 	.delete([
+		checkPermission("role", "delete"),
 		controllerAsync((request, response) =>
 			roleController.deleteRole(request, response),
 		),

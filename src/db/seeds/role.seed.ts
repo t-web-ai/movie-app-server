@@ -13,13 +13,18 @@ const roles: Partial<RoleDocument>[] = [
 			PERMISSION.ADMIN_READ,
 			PERMISSION.ADMIN_UPDATE,
 			PERMISSION.ADMIN_DELETE,
+
+			PERMISSION.ROLE_CREATE,
+			PERMISSION.ROLE_READ,
+			PERMISSION.ROLE_UPDATE,
+			PERMISSION.ROLE_DELETE,
 		],
 	},
 	{
 		_id: ROLE.ADMIN,
 		name: "Admin",
 		type: "system",
-		permissions: [PERMISSION.ADMIN_READ],
+		permissions: [PERMISSION.ADMIN_READ, PERMISSION.ROLE_READ],
 	},
 ];
 

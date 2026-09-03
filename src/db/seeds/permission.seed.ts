@@ -27,6 +27,27 @@ const permissions: Partial<PermissionDocument>[] = [
 		resource: "admin",
 		action: "read",
 	},
+
+	{
+		_id: PERMISSION.ROLE_CREATE,
+		resource: "role",
+		action: "create",
+	},
+	{
+		_id: PERMISSION.ROLE_READ,
+		resource: "role",
+		action: "read",
+	},
+	{
+		_id: PERMISSION.ROLE_UPDATE,
+		resource: "role",
+		action: "update",
+	},
+	{
+		_id: PERMISSION.ROLE_DELETE,
+		resource: "role",
+		action: "delete",
+	},
 ];
 
 export async function seedPermission(session: ClientSession) {
