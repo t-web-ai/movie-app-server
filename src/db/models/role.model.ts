@@ -11,6 +11,7 @@ const RoleSchema = new Schema(
 		name: {
 			type: String,
 			required: true,
+			unique: true,
 		},
 		permissions: [{ type: Types.ObjectId, ref: "permission", required: true }],
 		type: {
@@ -21,8 +22,16 @@ const RoleSchema = new Schema(
 	},
 	{
 		timestamps: true,
+		toJSON: { virtuals: true },
+		toObject: { virtuals: true },
 	},
 );
+
+RoleSchema.virtual("admins", {
+	ref: "admin",
+	localField: "_id",
+	foreignField: "role",
+});
 
 export type RoleSchemaType = InferSchemaType<typeof RoleSchema>;
 export type RoleDocument = HydratedDocument<RoleSchemaType>;
