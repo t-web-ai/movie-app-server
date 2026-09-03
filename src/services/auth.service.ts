@@ -25,7 +25,7 @@ class AuthService {
 			role: admin.role,
 		});
 
-		return { admin, token };
+		return { token };
 	}
 }
 
