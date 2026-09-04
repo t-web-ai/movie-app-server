@@ -2,7 +2,7 @@ import type { QueryFilter } from "mongoose";
 import z from "zod";
 import type { AdminSchemaType } from "../../db/models/admin.model";
 
-export function buildFilterClause(
+export function buildAdminFilterClause(
 	filter: AdminFilterType,
 ): QueryFilter<AdminSchemaType> {
 	const queryFilter: QueryFilter<AdminSchemaType> = {};

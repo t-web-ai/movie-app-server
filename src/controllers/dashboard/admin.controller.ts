@@ -4,7 +4,7 @@ import { successResponse } from "../../helpers/response.helper";
 import type AdminService from "../../services/dashboard/admin.service";
 import {
 	AdminFilterSchema,
-	buildFilterClause,
+	buildAdminFilterClause,
 } from "../../utils/filters/admin.filter";
 import { validateSchema } from "../../utils/validate.util";
 import {
@@ -20,7 +20,7 @@ class AdminController {
 		const { query } = request;
 
 		const filterInput = validateSchema(AdminFilterSchema, query);
-		const filter = buildFilterClause(filterInput);
+		const filter = buildAdminFilterClause(filterInput);
 		const paginationInput = validateSchema(PaginationSchema, query);
 
 		const data = await this.adminService.getAllAdmin(filter, paginationInput);
