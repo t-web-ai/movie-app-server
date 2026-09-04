@@ -1,7 +1,7 @@
 import { Types } from "mongoose";
 import z from "zod";
 
-export const AdminSchema = z.object({
+export const AdminCreateSchema = z.object({
 	name: z.string().min(1),
 	email: z.email(),
 	password: z.string().min(5),
@@ -13,15 +13,15 @@ export const AdminSchema = z.object({
 		.transform((id) => new Types.ObjectId(id)),
 });
 
-export type AdminInput = z.infer<typeof AdminSchema>;
+export type AdminCreateInput = z.infer<typeof AdminCreateSchema>;
 
-export const AdminLoginSchema = AdminSchema.pick({
+export const AdminLoginSchema = AdminCreateSchema.pick({
 	email: true,
 	password: true,
 });
 
 export type AdminLoginInput = z.infer<typeof AdminLoginSchema>;
 
-export const AdminUpdateSchema = AdminSchema.partial();
+export const AdminUpdateSchema = AdminCreateSchema.partial();
 
 export type AdminUpdateInput = z.infer<typeof AdminUpdateSchema>;

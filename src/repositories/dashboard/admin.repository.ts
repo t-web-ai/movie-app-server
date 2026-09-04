@@ -5,7 +5,7 @@ import type {
 	AdminSchemaType,
 } from "../../db/models/admin.model";
 import type {
-	AdminInput,
+	AdminCreateInput,
 	AdminUpdateInput,
 } from "../../validators/schemas/admin.schema";
 import type { AuthUserInput } from "../../validators/schemas/auth.schema";
@@ -60,8 +60,8 @@ class AdminRepository {
 	async deleteAdmin(id: Types.ObjectId) {
 		return await Admin.findOneAndDelete(id);
 	}
-	async createAdmin(adminInput: AdminInput) {
-		const admin = new Admin(adminInput);
+	async createAdmin(adminCreateInput: AdminCreateInput) {
+		const admin = new Admin(adminCreateInput);
 		await admin.save();
 		return admin;
 	}

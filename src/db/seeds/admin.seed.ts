@@ -1,11 +1,11 @@
 import type { ClientSession } from "mongoose";
 import { hashPassword } from "../../utils/bcrypt.util";
 import logger from "../../utils/logger.util";
-import type { AdminInput } from "../../validators/schemas/admin.schema";
+import type { AdminCreateInput } from "../../validators/schemas/admin.schema";
 import { Admin } from "../models/admin.model";
 import { ROLE } from "./constant";
 
-const admins: AdminInput[] = [
+const admins: AdminCreateInput[] = [
 	{
 		name: "Toee Thiha Kyaw",
 		email: "toeethiha@cbs.com.mm",

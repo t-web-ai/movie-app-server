@@ -1,7 +1,7 @@
 import type { QueryFilter, Types } from "mongoose";
 import { Role } from "../../db/models";
 import type { RoleDocument, RoleSchemaType } from "../../db/models/role.model";
-import type { AdminInput } from "../../validators/schemas/admin.schema";
+import type { AdminCreateInput } from "../../validators/schemas/admin.schema";
 import type {
 	RoleCreateInput,
 	RoleUpdateInput,
@@ -23,7 +23,9 @@ class RoleRepository {
 	}
 
 	async getSingleRoleWithAdmins(filter: QueryFilter<RoleSchemaType>) {
-		const role = await Role.findOne(filter).populate<{ admins: AdminInput[] }>({
+		const role = await Role.findOne(filter).populate<{
+			admins: AdminCreateInput[];
+		}>({
 			path: "admins",
 			select: { name: 1, email: 1 },
 		});

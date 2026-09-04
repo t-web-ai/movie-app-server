@@ -4,7 +4,7 @@ import { BadRequestError } from "../../helpers/errors/badRequest.error";
 import { NotFoundError } from "../../helpers/errors/notFound.error";
 import type AdminRepository from "../../repositories/dashboard/admin.repository";
 import type {
-	AdminInput,
+	AdminCreateInput,
 	AdminUpdateInput,
 } from "../../validators/schemas/admin.schema";
 import type { PaginationInput } from "../../validators/schemas/pagination.schema";
@@ -50,8 +50,8 @@ class AdminService {
 		return { admin };
 	}
 
-	async createAdmin(adminInput: AdminInput) {
-		const admin = await this.adminRepository.createAdmin(adminInput);
+	async createAdmin(adminCreateInput: AdminCreateInput) {
+		const admin = await this.adminRepository.createAdmin(adminCreateInput);
 		if (!admin) throw new BadRequestError("Faild to create admin");
 
 		return { admin };

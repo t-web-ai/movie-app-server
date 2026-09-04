@@ -8,7 +8,7 @@ import {
 } from "../../utils/filters/admin.filter";
 import { validateSchema } from "../../utils/validate.util";
 import {
-	AdminSchema,
+	AdminCreateSchema,
 	AdminUpdateSchema,
 } from "../../validators/schemas/admin.schema";
 import { PaginationSchema } from "../../validators/schemas/pagination.schema";
@@ -72,8 +72,8 @@ class AdminController {
 
 	async createAdmin(request: Request, response: Response) {
 		const { body } = request;
-		const adminInput = validateSchema(AdminSchema, body);
-		const data = await this.adminService.createAdmin(adminInput);
+		const adminCreateInput = validateSchema(AdminCreateSchema, body);
+		const data = await this.adminService.createAdmin(adminCreateInput);
 		return successResponse({
 			response,
 			message: "Create admin successfully",
