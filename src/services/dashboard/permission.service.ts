@@ -1,4 +1,4 @@
-import type PermissionRepository from "../../repositories/dashboard/permission.repository";
+import type PermissionRepository from "../../repositories/permission.repository";
 
 class PermissionService {
 	constructor(private readonly permissionRepository: PermissionRepository) {}

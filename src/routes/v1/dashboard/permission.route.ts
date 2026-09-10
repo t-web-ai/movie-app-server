@@ -1,7 +1,7 @@
 import { Router } from "express";
 import PermissionController from "../../../controllers/dashboard/permission.controller";
 import { controllerAsync } from "../../../middlewares/handlers/controllerAsync.handler";
-import PermissionRepository from "../../../repositories/dashboard/permission.repository";
+import PermissionRepository from "../../../repositories/permission.repository";
 import PermissionService from "../../../services/dashboard/permission.service";
 
 const router = Router();

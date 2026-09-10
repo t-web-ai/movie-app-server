@@ -2,7 +2,7 @@ import type { QueryFilter, Types } from "mongoose";
 import type { AdminSchemaType } from "../../db/models/admin.model";
 import { BadRequestError } from "../../helpers/errors/badRequest.error";
 import { NotFoundError } from "../../helpers/errors/notFound.error";
-import type AdminRepository from "../../repositories/dashboard/admin.repository";
+import type AdminRepository from "../../repositories/admin.repository";
 import type {
 	AdminCreateInput,
 	AdminUpdateInput,

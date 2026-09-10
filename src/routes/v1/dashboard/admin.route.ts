@@ -2,7 +2,7 @@ import { Router } from "express";
 import AdminController from "../../../controllers/dashboard/admin.controller";
 import { controllerAsync } from "../../../middlewares/handlers/controllerAsync.handler";
 import { checkPermission } from "../../../middlewares/permission.middleware";
-import AdminRepository from "../../../repositories/dashboard/admin.repository";
+import AdminRepository from "../../../repositories/admin.repository";
 import AdminService from "../../../services/dashboard/admin.service";
 
 const router = Router();

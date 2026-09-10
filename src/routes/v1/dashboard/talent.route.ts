@@ -5,7 +5,7 @@ import {
 	controllerAsyncWithTransaction,
 } from "../../../middlewares/handlers/controllerAsync.handler";
 import { uploadImage } from "../../../middlewares/upload.middleware";
-import TalentRepository from "../../../repositories/dashboard/talent.repository";
+import TalentRepository from "../../../repositories/talent.repository";
 import TalentService from "../../../services/dashboard/talent.service";
 
 const router = Router();

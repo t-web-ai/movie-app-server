@@ -7,7 +7,7 @@ import type {
 } from "../../db/models/talent.model";
 import { BadRequestError } from "../../helpers/errors/badRequest.error";
 import { NotFoundError } from "../../helpers/errors/notFound.error";
-import type TalentRepository from "../../repositories/dashboard/talent.repository";
+import type TalentRepository from "../../repositories/talent.repository";
 import { deleteSingleFile, uploadSingleFile } from "../../utils/file.util";
 import type { PaginationInput } from "../../validators/schemas/pagination.schema";
 import type {

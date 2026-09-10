@@ -3,7 +3,7 @@ import type { RoleDocument } from "../../db/models/role.model";
 import { ForbiddenError } from "../../helpers/errors/auth.error";
 import { BadRequestError } from "../../helpers/errors/badRequest.error";
 import { NotFoundError } from "../../helpers/errors/notFound.error";
-import type RoleRepository from "../../repositories/dashboard/role.repository";
+import type RoleRepository from "../../repositories/role.repository";
 import type {
 	RoleCreateInput,
 	RoleUpdateInput,

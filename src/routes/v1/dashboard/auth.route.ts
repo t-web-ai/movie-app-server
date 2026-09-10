@@ -1,7 +1,7 @@
 import { Router } from "express";
 import AuthController from "../../../controllers/dashboard/auth.controller";
 import { controllerAsync } from "../../../middlewares/handlers/controllerAsync.handler";
-import AdminRepository from "../../../repositories/dashboard/admin.repository";
+import AdminRepository from "../../../repositories/admin.repository";
 import AuthService from "../../../services/dashboard/auth.service";
 
 const router = Router();

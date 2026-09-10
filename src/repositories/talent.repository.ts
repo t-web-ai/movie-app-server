@@ -3,12 +3,12 @@ import {
 	Talent,
 	type TalentDocument,
 	type TalentSchemaType,
-} from "../../db/models/talent.model";
-import type { PaginationInput } from "../../validators/schemas/pagination.schema";
+} from "../db/models/talent.model";
+import type { PaginationInput } from "../validators/schemas/pagination.schema";
 import type {
 	TalentCreateInput,
 	TalentUpdateInput,
-} from "../../validators/schemas/talent.schema";
+} from "../validators/schemas/talent.schema";
 
 class TalentRepository {
 	async getAllTalents(
