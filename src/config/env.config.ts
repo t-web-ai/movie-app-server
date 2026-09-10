@@ -14,6 +14,8 @@ const EnvSchema = z.object({
 		.enum(["developement", "production"])
 		.optional()
 		.default("developement"),
+	FILE_LOCATION: z.string().trim().min(1),
+	IMAGEKIT_PRIVATE_KEY: z.string().trim().min(1),
 });
 
 type EnvType = z.infer<typeof EnvSchema>;

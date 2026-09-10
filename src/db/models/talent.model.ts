@@ -10,10 +10,19 @@ const TalentSchema = new Schema(
 		name: {
 			type: String,
 			required: true,
+			unique: true,
 		},
-		imageUrl: {
-			type: String,
-		},
+		image: new Schema(
+			{
+				file: {
+					type: String,
+				},
+				fileId: {
+					type: String,
+				},
+			},
+			{ _id: false },
+		),
 	},
 	{
 		timestamps: true,

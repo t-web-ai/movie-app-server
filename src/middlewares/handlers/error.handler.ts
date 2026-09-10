@@ -1,6 +1,7 @@
 import type { ErrorRequestHandler } from "express";
 import { JsonWebTokenError } from "jsonwebtoken";
 import { MongooseError, mongo } from "mongoose";
+import { MulterError } from "multer";
 import { treeifyError, ZodError } from "zod";
 import { HttpStatus } from "../../config/http.config";
 import { HttpError } from "../../helpers/errors/http.error";
@@ -68,6 +69,17 @@ export const errorHandler: ErrorRequestHandler = (
 			status: HttpStatus.BAD_REQUEST,
 			message: error.name,
 			details: error.message,
+		});
+	}
+	if (error instanceof MulterError) {
+		return errorResponse({
+			response,
+			status: HttpStatus.BAD_REQUEST,
+			message: error.name,
+			details: {
+				field: error.field,
+				message: error.message,
+			},
 		});
 	}
 	return errorResponse({
