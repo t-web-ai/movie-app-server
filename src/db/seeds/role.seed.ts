@@ -1,6 +1,7 @@
 import type { ClientSession } from "mongoose";
 import logger from "../../utils/logger.util";
-import { Role, type RoleDocument } from "../models/role.model";
+import { Role } from "../models";
+import type { RoleDocument } from "../models/role.model";
 import { PERMISSION, ROLE } from "./constant";
 
 const roles: Partial<RoleDocument>[] = [

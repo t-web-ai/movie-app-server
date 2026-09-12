@@ -1,7 +1,7 @@
 import type { ClientSession } from "mongoose";
 import logger from "../../utils/logger.util";
 import type { GenreCreateInput } from "../../validators/schemas/genre.schema";
-import { Genre } from "../models/genre.model";
+import { Genre } from "../models";
 
 const genres: GenreCreateInput[] = [
 	{ name: "Action" },

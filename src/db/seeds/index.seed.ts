@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
 import env from "../../config/env.config";
 import logger from "../../utils/logger.util";
-import { Admin, Permission, Role } from "../models";
-import { Genre } from "../models/genre.model";
+import { Admin, Genre, Permission, Role } from "../models";
 import { deleteAdmin, seedAdmin } from "./admin.seed";
 import { deleteGenre, seedGenre } from "./genre.seed";
 import { deletePermission, seedPermission } from "./permission.seed";
@@ -42,8 +41,8 @@ export async function seed() {
 		}
 		process.exitCode = 1;
 	} finally {
-		session.endSession();
-		mongoose.disconnect();
+		await session.endSession();
+		await mongoose.disconnect();
 		process.exit();
 	}
 }

@@ -1,9 +1,6 @@
 import type { QueryFilter } from "mongoose";
-import {
-	Genre,
-	type GenreDocument,
-	type GenreSchemaType,
-} from "../db/models/genre.model";
+import { Genre } from "../db/models";
+import type { GenreDocument, GenreSchemaType } from "../db/models/genre.model";
 import type {
 	GenreCreateInput,
 	GenreUpdateInput,

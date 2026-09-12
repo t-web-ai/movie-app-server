@@ -86,6 +86,6 @@ export const errorHandler: ErrorRequestHandler = (
 		response,
 		status: HttpStatus.INTERNAL_SERVER_ERROR,
 		message: error.name,
-		details: error.message,
+		details: "Something went wrong",
 	});
 };

@@ -48,9 +48,17 @@ const MovieSchema = new Schema(
 			type: String,
 			required: true,
 		},
-		imageUrl: {
-			type: String,
-		},
+		image: new Schema(
+			{
+				file: {
+					type: String,
+				},
+				fileId: {
+					type: String,
+				},
+			},
+			{ _id: false },
+		),
 		releaseDate: {
 			type: Date,
 		},
@@ -59,13 +67,13 @@ const MovieSchema = new Schema(
 			min: 0,
 			max: 10,
 		},
-		genre: [
+		genres: [
 			{
 				type: Types.ObjectId,
 				ref: "genre",
 			},
 		],
-		director: [
+		directors: [
 			{
 				type: Types.ObjectId,
 				ref: "talent",
@@ -75,7 +83,7 @@ const MovieSchema = new Schema(
 			type: Boolean,
 			default: true,
 		},
-		cast: [{ type: Types.ObjectId, ref: "talent" }],
+		casts: [{ type: Types.ObjectId, ref: "talent" }],
 		links: [LinkSchema],
 		isSeries: {
 			type: Boolean,

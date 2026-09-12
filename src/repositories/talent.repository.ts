@@ -1,8 +1,8 @@
 import type { ClientSession, QueryFilter, Types } from "mongoose";
-import {
-	Talent,
-	type TalentDocument,
-	type TalentSchemaType,
+import { Talent } from "../db/models";
+import type {
+	TalentDocument,
+	TalentSchemaType,
 } from "../db/models/talent.model";
 import type { PaginationInput } from "../validators/schemas/pagination.schema";
 import type {
