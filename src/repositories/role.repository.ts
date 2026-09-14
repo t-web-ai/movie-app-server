@@ -2,6 +2,7 @@ import type { QueryFilter, Types } from "mongoose";
 import { Role } from "../db/models";
 import type { RoleDocument, RoleSchemaType } from "../db/models/role.model";
 import type { AdminCreateInput } from "../validators/schemas/admin.schema";
+import type { PermissionInput } from "../validators/schemas/permission.schema";
 import type {
 	RoleCreateInput,
 	RoleUpdateInput,
@@ -18,7 +19,11 @@ class RoleRepository {
 	}
 
 	async getSingleRoleById(id: Types.ObjectId) {
-		const role = await Role.findById(id).populate("permissions").lean();
+		const role = await Role.findById(id)
+			.populate<{
+				permissions: PermissionInput[];
+			}>("permissions")
+			.lean();
 		return role;
 	}
 

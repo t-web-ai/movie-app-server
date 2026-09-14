@@ -5,14 +5,13 @@ import type {
 	AdminCreateInput,
 	AdminUpdateInput,
 } from "../validators/schemas/admin.schema";
-import type { AuthUserInput } from "../validators/schemas/auth.schema";
 import type { PaginationInput } from "../validators/schemas/pagination.schema";
 
 class AdminRepository {
 	async getAdmin(filter: QueryFilter<AdminDocument>, safe?: boolean) {
 		const admin = await Admin.findOne(filter)
 			.select({ ...(safe && { password: 0 }) })
-			.populate<AuthUserInput>({
+			.populate({
 				path: "role",
 				populate: {
 					path: "permissions",
