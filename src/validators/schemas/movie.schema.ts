@@ -38,7 +38,11 @@ export const BaseMovieSchema = z.object({
 				return [...new Set(directors.map((id) => id.toString()))];
 			}
 		}),
-	directorCredited: z.enum(["true", "false"]).transform((v) => v === "true"),
+	directorCredited: z
+		.enum(["true", "false"], { message: "Expected value : 'true' or 'false'" })
+		.optional()
+		.default("true")
+		.transform((v) => v === "true"),
 	casts: arrayable(ObjectIdSchema)
 		.optional()
 		.transform((casts) => {

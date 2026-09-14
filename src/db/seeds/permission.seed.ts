@@ -29,6 +29,69 @@ const permissions: Partial<PermissionDocument>[] = [
 	},
 
 	{
+		_id: PERMISSION.MOVIE_CREATE,
+		resource: "movie",
+		action: "create",
+	},
+	{
+		_id: PERMISSION.MOVIE_READ,
+		resource: "movie",
+		action: "read",
+	},
+	{
+		_id: PERMISSION.MOVIE_UPDATE,
+		resource: "movie",
+		action: "update",
+	},
+	{
+		_id: PERMISSION.MOVIE_DELETE,
+		resource: "movie",
+		action: "delete",
+	},
+
+	{
+		_id: PERMISSION.TALENT_CREATE,
+		resource: "talent",
+		action: "create",
+	},
+	{
+		_id: PERMISSION.TALENT_READ,
+		resource: "talent",
+		action: "read",
+	},
+	{
+		_id: PERMISSION.TALENT_UPDATE,
+		resource: "talent",
+		action: "update",
+	},
+	{
+		_id: PERMISSION.TALENT_DELETE,
+		resource: "talent",
+		action: "delete",
+	},
+
+	{
+		_id: PERMISSION.GENRE_CREATE,
+		resource: "genre",
+		action: "create",
+	},
+	{
+		_id: PERMISSION.GENRE_READ,
+		resource: "genre",
+		action: "read",
+	},
+	{
+		_id: PERMISSION.GENRE_UPDATE,
+		resource: "genre",
+		action: "update",
+	},
+	{
+		_id: PERMISSION.GENRE_DELETE,
+		resource: "genre",
+		action: "delete",
+	},
+
+	{
 		_id: PERMISSION.ROLE_CREATE,
 		resource: "role",
 		action: "create",
