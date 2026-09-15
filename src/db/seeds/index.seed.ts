@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
 import env from "../../config/env.config";
 import logger from "../../utils/logger.util";
-import { Admin, Genre, Permission, Role } from "../models";
+import { Admin, EmailSetting, Genre, Permission, Role } from "../models";
 import { deleteAdmin, seedAdmin } from "./admin.seed";
+import { deleteEmailSetting, seedEmailSetting } from "./emailSetting.seed";
 import { deleteGenre, seedGenre } from "./genre.seed";
 import { deletePermission, seedPermission } from "./permission.seed";
 import { deleteRole, seedRole } from "./role.seed";
@@ -18,7 +19,7 @@ export async function seed() {
 	await mongoose.connect(env.MONGODB_URI);
 	const session = await mongoose.startSession();
 
-	prepareCollection([Admin, Role, Permission, Genre]);
+	prepareCollection([Admin, Role, Permission, Genre, EmailSetting]);
 
 	try {
 		session.startTransaction();
@@ -26,12 +27,15 @@ export async function seed() {
 		await deleteRole(session);
 		await deletePermission(session);
 		await deleteGenre(session);
+		await deleteEmailSetting(session);
 
 		logger.info("initialize database seeding");
 		await seedAdmin(session);
 		await seedRole(session);
 		await seedPermission(session);
 		await seedGenre(session);
+		await seedEmailSetting(session);
+
 		await session.commitTransaction();
 	} catch (error) {
 		logger.info("failed to seed", error);

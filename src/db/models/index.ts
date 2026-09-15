@@ -1,4 +1,5 @@
 export { Admin } from "./admin.model";
+export { EmailSetting } from "./emailSetting.model";
 export { Genre } from "./genre.model";
 export { Movie } from "./movie.model";
 export { Permission } from "./permission.model";

@@ -41,7 +41,7 @@ export interface ErrorResponseOptions {
 	response: Response;
 	message?: string;
 	status?: HttpStatusCode;
-	details: unknown;
+	details?: unknown;
 	bodyStatus?: number;
 }
 
