@@ -32,7 +32,7 @@ export function controllerAsyncWithTransaction(
 			}
 			next(error);
 		} finally {
-			session.endSession();
+			await session.endSession();
 		}
 	};
 }

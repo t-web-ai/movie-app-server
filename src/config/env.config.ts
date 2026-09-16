@@ -25,6 +25,10 @@ const EnvSchema = z.object({
 	MAIL_SECURE: z.preprocess((secure) => secure === "true", z.boolean()),
 	MAIL_AUTH_USER: z.email().trim(),
 	MAIL_AUTH_PASS: z.string().trim().min(1),
+
+	APP_NAME: z.string().trim().min(1),
+	APP_URL: z.url().trim(),
+	APP_SUPPORT_EMAIL: z.email().trim(),
 });
 
 type EnvType = z.infer<typeof EnvSchema>;

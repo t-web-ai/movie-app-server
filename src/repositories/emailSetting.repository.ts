@@ -4,26 +4,26 @@ import type { EmailSettingDocument } from "../db/models/emailSetting.model";
 import type { EmailSettingUpdateInput } from "../validators/schemas/email.schema";
 
 class EmailSettingRepository {
-	async findOneEmail(filter: QueryFilter<EmailSettingDocument>) {
-		const email = await EmailSetting.findOne(filter).lean();
-		return email;
+	async findOneEmailSetting(filter: QueryFilter<EmailSettingDocument>) {
+		const emailSetting = await EmailSetting.findOne(filter).lean();
+		return emailSetting;
 	}
 
-	async findEmailAndUpdate(
+	async findEmailSettingAndUpdate(
 		filter: QueryFilter<EmailSettingDocument>,
 		emailSettingUpdateInput: EmailSettingUpdateInput,
 		session: ClientSession,
 	) {
-		const email = await EmailSetting.findOneAndUpdate(
+		const emailSetting = await EmailSetting.findOneAndUpdate(
 			filter,
 			emailSettingUpdateInput,
 			{
 				session,
 				returnDocument: "after",
 			},
-		);
+		).lean();
 
-		return email;
+		return emailSetting;
 	}
 }
 

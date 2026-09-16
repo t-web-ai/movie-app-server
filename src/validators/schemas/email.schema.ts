@@ -21,7 +21,7 @@ export const EmailSchema = z.object({
 	from: z.string().trim().min(1).optional(),
 	to: z.email().trim(),
 	subject: z.string().trim().min(1),
-	body: z.string().trim().min(1),
+	html: z.string().trim().min(1),
 });
 
 export type EmailInput = z.infer<typeof EmailSchema>;

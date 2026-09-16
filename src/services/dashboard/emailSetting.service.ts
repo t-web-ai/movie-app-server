@@ -14,7 +14,7 @@ class EmailSetttingService {
 		private readonly emailSettingRepository: EmailSettingRepository,
 	) {}
 	async getEmailSetting() {
-		const emailSetting = await this.emailSettingRepository.findOneEmail({
+		const emailSetting = await this.emailSettingRepository.findOneEmailSetting({
 			default: true,
 		});
 		if (!emailSetting) throw new NotFoundError("No email setting");
@@ -26,11 +26,12 @@ class EmailSetttingService {
 		emailSettingUpdateInput: EmailSettingUpdateInput,
 		session: ClientSession,
 	) {
-		const emailSetting = await this.emailSettingRepository.findEmailAndUpdate(
-			{ default: true },
-			emailSettingUpdateInput,
-			session,
-		);
+		const emailSetting =
+			await this.emailSettingRepository.findEmailSettingAndUpdate(
+				{ default: true },
+				emailSettingUpdateInput,
+				session,
+			);
 		if (!emailSetting)
 			throw new BadRequestError("Failed to update email setting");
 
@@ -38,14 +39,9 @@ class EmailSetttingService {
 	}
 
 	async testEmail(emailInput: EmailInput) {
-		const emailSetting = await this.emailSettingRepository.findOneEmail({
-			default: true,
-		});
-		if (!emailSetting) throw new NotFoundError("No email setting");
-
-		const transporter = await getEmailTransporter(emailSetting);
-		if (transporter) {
-			await sendEmail(transporter, emailInput);
+		const emailTransporter = await getEmailTransporter();
+		if (emailTransporter) {
+			await sendEmail(emailTransporter, emailInput);
 		}
 	}
 }

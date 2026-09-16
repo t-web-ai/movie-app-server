@@ -1,9 +1,17 @@
 import mongoose from "mongoose";
 import env from "../../config/env.config";
 import logger from "../../utils/logger.util";
-import { Admin, EmailSetting, Genre, Permission, Role } from "../models";
+import {
+	Admin,
+	EmailSetting,
+	EmailTemplate,
+	Genre,
+	Permission,
+	Role,
+} from "../models";
 import { deleteAdmin, seedAdmin } from "./admin.seed";
 import { deleteEmailSetting, seedEmailSetting } from "./emailSetting.seed";
+import { deleteEmailTemplate, seedEmailTemplate } from "./emailTemplate.seed";
 import { deleteGenre, seedGenre } from "./genre.seed";
 import { deletePermission, seedPermission } from "./permission.seed";
 import { deleteRole, seedRole } from "./role.seed";
@@ -19,7 +27,14 @@ export async function seed() {
 	await mongoose.connect(env.MONGODB_URI);
 	const session = await mongoose.startSession();
 
-	prepareCollection([Admin, Role, Permission, Genre, EmailSetting]);
+	prepareCollection([
+		Admin,
+		Role,
+		Permission,
+		Genre,
+		EmailSetting,
+		EmailTemplate,
+	]);
 
 	try {
 		session.startTransaction();
@@ -28,6 +43,7 @@ export async function seed() {
 		await deletePermission(session);
 		await deleteGenre(session);
 		await deleteEmailSetting(session);
+		await deleteEmailTemplate(session);
 
 		logger.info("initialize database seeding");
 		await seedAdmin(session);
@@ -35,6 +51,7 @@ export async function seed() {
 		await seedPermission(session);
 		await seedGenre(session);
 		await seedEmailSetting(session);
+		await seedEmailTemplate(session);
 
 		await session.commitTransaction();
 	} catch (error) {

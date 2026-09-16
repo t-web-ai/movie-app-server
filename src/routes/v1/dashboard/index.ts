@@ -3,6 +3,7 @@ import { authMiddleware } from "../../../middlewares/auth.middleware";
 import adminRoute from "./admin.route";
 import authRoute from "./auth.route";
 import emailSettingRoute from "./emailSetting.route";
+import emailTemplateRoute from "./emailTemplate.route";
 import genreRoute from "./genre.route";
 import movieRoute from "./movie.route";
 import permissionRoute from "./permission.route";
@@ -19,5 +20,6 @@ router.use("/talent", [authMiddleware, talentRoute]);
 router.use("/genre", [authMiddleware, genreRoute]);
 router.use("/movie", [authMiddleware, movieRoute]);
 router.use("/email-setting", [authMiddleware, emailSettingRoute]);
+router.use("/email-template", [authMiddleware, emailTemplateRoute]);
 
 export default router;
