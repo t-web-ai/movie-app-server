@@ -1,6 +1,9 @@
 import { Router } from "express";
 import AdminController from "../../../controllers/dashboard/admin.controller";
-import { controllerAsync } from "../../../middlewares/handlers/controllerAsync.handler";
+import {
+	controllerAsync,
+	controllerAsyncWithTransaction,
+} from "../../../middlewares/handlers/controllerAsync.handler";
 import { checkPermission } from "../../../middlewares/permission.middleware";
 import AdminRepository from "../../../repositories/admin.repository";
 import AdminService from "../../../services/dashboard/admin.service";
@@ -20,8 +23,8 @@ router
 	])
 	.post([
 		checkPermission("admin", "create"),
-		controllerAsync((request, response) =>
-			adminController.createAdmin(request, response),
+		controllerAsyncWithTransaction((request, response, session) =>
+			adminController.createAdmin(request, response, session),
 		),
 	]);
 
@@ -35,14 +38,14 @@ router
 	])
 	.put([
 		checkPermission("admin", "update"),
-		controllerAsync((request, response) =>
-			adminController.updateAdmin(request, response),
+		controllerAsyncWithTransaction((request, response, session) =>
+			adminController.updateAdmin(request, response, session),
 		),
 	])
 	.delete([
 		checkPermission("admin", "delete"),
-		controllerAsync((request, response) =>
-			adminController.deleteAdmin(request, response),
+		controllerAsyncWithTransaction((request, response, session) =>
+			adminController.deleteAdmin(request, response, session),
 		),
 	]);
 

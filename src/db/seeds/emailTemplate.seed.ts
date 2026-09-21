@@ -13,6 +13,7 @@ const admin_signup_success = {
 const forgot_password_otp = {
 	adminName: "{{adminName}}",
 	otp: "{{otp}}",
+	expireAt: "{{expireAt}}",
 };
 const password_updated_alert = {
 	adminName: "{{adminName}}",
@@ -38,7 +39,7 @@ export const emailTemplates: EmailTemplateCreateInput[] = [
 	{
 		type: "forgot_password_otp",
 		subject: "Password Reset OTP",
-		html: "<p>Hello {{adminName}},</p><p>Your OTP to reset your password is: <strong>{{otp}}</strong></p><p>It expires in 5 minutes.</p>",
+		html: "<p>Hello {{adminName}},</p><p>Your OTP to reset your password is: <strong>{{otp}}</strong></p><p>It expires in {{expireAt}} minutes.</p>",
 		variables: Object.values(forgot_password_otp),
 	},
 	{

@@ -1,4 +1,4 @@
-import type { QueryFilter, Types } from "mongoose";
+import type { ClientSession, QueryFilter, Types } from "mongoose";
 import { Admin } from "../db/models";
 import type { AdminDocument, AdminSchemaType } from "../db/models/admin.model";
 import type {
@@ -45,20 +45,25 @@ class AdminRepository {
 	async updateAdmin(
 		filter: QueryFilter<AdminDocument>,
 		data: AdminUpdateInput,
+		session: ClientSession,
 	) {
 		const admin = await Admin.findOneAndUpdate(filter, data, {
+			session,
 			returnDocument: "after",
 		})
 			.select({ password: 0 })
 			.lean();
 		return admin;
 	}
-	async deleteAdmin(id: Types.ObjectId) {
-		return await Admin.findOneAndDelete(id);
+	async deleteAdmin(id: Types.ObjectId, session: ClientSession) {
+		return await Admin.findOneAndDelete(id, { session });
 	}
-	async createAdmin(adminCreateInput: AdminCreateInput) {
+	async createAdmin(
+		adminCreateInput: AdminCreateInput,
+		session: ClientSession,
+	) {
 		const admin = new Admin(adminCreateInput);
-		await admin.save();
+		await admin.save({ session });
 		return admin;
 	}
 }

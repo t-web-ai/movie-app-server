@@ -1,4 +1,5 @@
 import type { Request, Response } from "express";
+import type { ClientSession } from "mongoose";
 import { HttpStatus } from "../../config/http.config";
 import { successResponse } from "../../helpers/response.helper";
 import type AdminService from "../../services/dashboard/admin.service";
@@ -44,12 +45,20 @@ class AdminController {
 		});
 	}
 
-	async updateAdmin(request: Request, response: Response) {
+	async updateAdmin(
+		request: Request,
+		response: Response,
+		session: ClientSession,
+	) {
 		const { params, body } = request;
 		const { id } = validateSchema(IdSchema, params);
 		const adminUpdateInput = validateSchema(AdminUpdateSchema, body);
 
-		const data = await this.adminService.updateAdmin(id, adminUpdateInput);
+		const data = await this.adminService.updateAdmin(
+			id,
+			adminUpdateInput,
+			session,
+		);
 		return successResponse({
 			response,
 			message: "Update admin successfully",
@@ -58,10 +67,14 @@ class AdminController {
 		});
 	}
 
-	async deleteAdmin(request: Request, response: Response) {
+	async deleteAdmin(
+		request: Request,
+		response: Response,
+		session: ClientSession,
+	) {
 		const { params } = request;
 		const { id } = validateSchema(IdSchema, params);
-		const data = await this.adminService.deleteAdminById(id);
+		const data = await this.adminService.deleteAdminById(id, session);
 		return successResponse({
 			response,
 			message: "Delete admin successfully",
@@ -70,10 +83,14 @@ class AdminController {
 		});
 	}
 
-	async createAdmin(request: Request, response: Response) {
+	async createAdmin(
+		request: Request,
+		response: Response,
+		session: ClientSession,
+	) {
 		const { body } = request;
 		const adminCreateInput = validateSchema(AdminCreateSchema, body);
-		const data = await this.adminService.createAdmin(adminCreateInput);
+		const data = await this.adminService.createAdmin(adminCreateInput, session);
 		return successResponse({
 			response,
 			message: "Create admin successfully",

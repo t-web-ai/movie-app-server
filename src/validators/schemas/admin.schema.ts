@@ -25,3 +25,10 @@ export type AdminLoginInput = z.infer<typeof AdminLoginSchema>;
 export const AdminUpdateSchema = AdminCreateSchema.partial();
 
 export type AdminUpdateInput = z.infer<typeof AdminUpdateSchema>;
+
+export const ResetPasswordSchema = AdminCreateSchema.pick({
+	email: true,
+	password: true,
+});
+
+export type ResetPasswordInput = z.infer<typeof ResetPasswordSchema>;

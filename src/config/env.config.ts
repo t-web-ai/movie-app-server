@@ -29,6 +29,8 @@ const EnvSchema = z.object({
 	APP_NAME: z.string().trim().min(1),
 	APP_URL: z.url().trim(),
 	APP_SUPPORT_EMAIL: z.email().trim(),
+
+	OTP_EXPIRES_IN: z.coerce.number().int().optional().default(10),
 });
 
 type EnvType = z.infer<typeof EnvSchema>;
