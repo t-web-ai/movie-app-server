@@ -16,6 +16,8 @@ export const checkPermission = (
 		if (!request?.user) throw new UnauthenticatedError();
 
 		const user = request.user;
+		if (!user?.role?._id)
+			throw new ForbiddenError("You don't even have a role");
 		const role = await roleRepository.getSingleRoleById(user.role._id);
 
 		const permission = role?.permissions?.some(

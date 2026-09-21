@@ -30,12 +30,11 @@ class AdminRepository {
 			})
 			.populate({
 				path: "role",
-				populate: {
-					path: "permissions",
-				},
+				select: { _id: 1, name: 1 },
 			})
 			.skip((paginationInput.page - 1) * paginationInput.limit)
 			.limit(paginationInput.limit)
+			.sort({ createdAt: "descending" })
 			.lean();
 		return admins;
 	}
@@ -64,7 +63,7 @@ class AdminRepository {
 	) {
 		const admin = new Admin(adminCreateInput);
 		await admin.save({ session });
-		return admin;
+		return admin.populate<{ role: { name: string } | null }>("role");
 	}
 }
 

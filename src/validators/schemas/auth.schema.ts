@@ -5,7 +5,7 @@ export const ActionSchema = z.enum(["create", "read", "update", "delete"]);
 export const AuthUserSchema = z.object({
 	name: z.string(),
 	email: z.email(),
-	role: ObjectIdSchema,
+	role: ObjectIdSchema.nullable().default(null),
 });
 
 export type AuthUserInput = z.infer<typeof AuthUserSchema>;

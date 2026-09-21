@@ -13,8 +13,17 @@ export function interpolate(
 	variables: Record<string, string>,
 ): string {
 	return text.replace(/\{\{(\w+)\}\}/g, (match, key) =>
-		String(variables[key] ?? match),
+		escapeHtml(String(variables[key] ?? match)),
 	);
+}
+
+export function escapeHtml(value: string): string {
+	return value
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+		.replace(/"/g, "&quot;")
+		.replace(/'/g, "&#39;");
 }
 
 export function renderEmailTemplate<T extends string>(

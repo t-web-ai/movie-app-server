@@ -9,6 +9,7 @@ const admin_signup_success = {
 	role: "{{role}}",
 	adminEmail: "{{adminEmail}}",
 	tempPassword: "{{tempPassword}}",
+	portalUrl: "{{portalUrl}}",
 };
 const forgot_password_otp = {
 	adminName: "{{adminName}}",
