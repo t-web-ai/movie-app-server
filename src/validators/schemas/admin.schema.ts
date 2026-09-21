@@ -1,16 +1,16 @@
-import { Types } from "mongoose";
 import z from "zod";
+import { ObjectIdSchema } from "../../common/schema";
 
 export const AdminCreateSchema = z.object({
 	name: z.string().min(1),
 	email: z.email(),
 	password: z.string().min(5),
-	role: z
-		.string()
-		.refine((id) => Types.ObjectId.isValid(id), {
-			message: "Invalid Object Id",
+	role: ObjectIdSchema,
+	status: z
+		.enum(["active", "suspend"], {
+			message: "Invalid status: must be active or suspend",
 		})
-		.transform((id) => new Types.ObjectId(id)),
+		.optional(),
 });
 
 export type AdminCreateInput = z.infer<typeof AdminCreateSchema>;

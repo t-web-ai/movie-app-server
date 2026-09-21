@@ -1,4 +1,7 @@
-import { UnauthenticatedError } from "../../helpers/errors/auth.error";
+import {
+	ForbiddenError,
+	UnauthenticatedError,
+} from "../../helpers/errors/auth.error";
 import { NotFoundError } from "../../helpers/errors/notFound.error";
 import type AdminRepository from "../../repositories/admin.repository";
 import { verifyPassword } from "../../utils/bcrypt.util";
@@ -13,6 +16,9 @@ class AuthService {
 		});
 		if (!admin) throw new NotFoundError("No Admin");
 
+		if (admin.status === "suspend")
+			throw new ForbiddenError("Your account is suspended");
+
 		const verified = await verifyPassword(
 			adminLoginInput.password,
 			admin.password,
@@ -22,7 +28,8 @@ class AuthService {
 		const token = generateToken({
 			name: admin.name,
 			email: admin.email,
-			role: admin?.role?._id,
+			role: admin?.role?._id ?? null,
+			status: admin.status,
 		});
 
 		return { token };

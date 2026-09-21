@@ -28,6 +28,11 @@ const AdminSchema = new Schema(
 			type: String,
 			required: true,
 		},
+		status: {
+			type: String,
+			enum: ["active", "suspend"],
+			default: "active",
+		},
 	},
 	{
 		timestamps: true,

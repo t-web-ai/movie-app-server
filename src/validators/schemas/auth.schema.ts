@@ -6,6 +6,11 @@ export const AuthUserSchema = z.object({
 	name: z.string(),
 	email: z.email(),
 	role: ObjectIdSchema.nullable().default(null),
+	status: z
+		.enum(["suspend", "active"], {
+			message: "Invalid status: must be active or suspend",
+		})
+		.optional(),
 });
 
 export type AuthUserInput = z.infer<typeof AuthUserSchema>;
