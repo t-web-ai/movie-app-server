@@ -26,6 +26,7 @@ class AuthService {
 		if (!verified) throw new UnauthenticatedError("Invalid credentials");
 
 		const token = generateToken({
+			id: admin._id,
 			name: admin.name,
 			email: admin.email,
 			role: admin?.role?._id ?? null,

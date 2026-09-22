@@ -3,6 +3,7 @@ import { ObjectIdSchema } from "../../common/schema";
 
 export const ActionSchema = z.enum(["create", "read", "update", "delete"]);
 export const AuthUserSchema = z.object({
+	id: ObjectIdSchema,
 	name: z.string(),
 	email: z.email(),
 	role: ObjectIdSchema.nullable().default(null),
