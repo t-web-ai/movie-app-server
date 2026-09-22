@@ -14,7 +14,7 @@ class RoleRepository {
 		if (withPermissions) {
 			query.populate("permissions");
 		}
-		const roles = await query.lean();
+		const roles = await query.sort({ createdAt: "descending" }).lean();
 		return roles;
 	}
 

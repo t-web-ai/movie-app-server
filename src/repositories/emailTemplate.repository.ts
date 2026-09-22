@@ -5,7 +5,9 @@ import type { EmailTemplateUpdateInput } from "../validators/schemas/emailTempla
 
 class EmailTemplateRepository {
 	async getAllEmailTemplates() {
-		const emailTemplates = await EmailTemplate.find().lean();
+		const emailTemplates = await EmailTemplate.find()
+			.sort({ createdAt: "descending" })
+			.lean();
 		return emailTemplates;
 	}
 

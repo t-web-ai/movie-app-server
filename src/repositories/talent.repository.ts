@@ -18,6 +18,7 @@ class TalentRepository {
 		const talents = await Talent.find(filter)
 			.skip((paginationInput.page - 1) * paginationInput.limit)
 			.limit(paginationInput.limit)
+			.sort({ createdAt: "descending" })
 			.lean();
 		return talents;
 	}

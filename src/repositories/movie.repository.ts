@@ -18,6 +18,7 @@ class MovieRepository {
 			.populate("casts", "-createdAt -updatedAt -__v")
 			.populate("directors", "-createdAt -updatedAt -__v")
 			.populate("genres", "-createdAt -updatedAt -__v")
+			.sort({ createdAt: "descending" })
 			.lean();
 
 		return movies;
