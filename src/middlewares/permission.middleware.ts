@@ -1,17 +1,14 @@
 import type { RequestHandler } from "express";
+import { REQUEST_METHODS_MAP } from "../common/constants";
 import {
 	ForbiddenError,
 	UnauthenticatedError,
 } from "../helpers/errors/auth.error";
 import RoleRepository from "../repositories/role.repository";
-import type { ActionInput } from "../validators/schemas/auth.schema";
 
 const roleRepository = new RoleRepository();
 
-export const checkPermission = (
-	resource: string,
-	action: ActionInput,
-): RequestHandler => {
+export const checkPermission = (resource: string): RequestHandler => {
 	return async (request, _response, next) => {
 		if (!request?.user) throw new UnauthenticatedError();
 
@@ -22,7 +19,8 @@ export const checkPermission = (
 
 		const permission = role?.permissions?.some(
 			(permission) =>
-				permission.resource === resource && permission.action === action,
+				permission.resource === resource &&
+				permission.action === REQUEST_METHODS_MAP[request.method],
 		);
 
 		if (!permission) throw new ForbiddenError("You have no permission");

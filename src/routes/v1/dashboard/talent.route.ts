@@ -17,15 +17,14 @@ const talentController = new TalentController(talentService);
 
 router
 	.route("/")
+	.all([checkPermission("talent")])
 	.get([
-		checkPermission("talent", "read"),
 		controllerAsync((request, response) =>
 			talentController.getAllTalents(request, response),
 		),
 	])
 	.post([
 		saveHistory("talent"),
-		checkPermission("talent", "create"),
 		uploadImage.single("image"),
 		controllerAsyncWithTransaction((request, response, session) =>
 			talentController.createTalent(request, response, session),
@@ -34,9 +33,9 @@ router
 
 router
 	.route("/:id")
+	.all([checkPermission("talent")])
 	.put([
 		saveHistory("talent"),
-		checkPermission("talent", "update"),
 		uploadImage.single("image"),
 		controllerAsyncWithTransaction((request, response, session) =>
 			talentController.updateTalent(request, response, session),
@@ -44,7 +43,6 @@ router
 	])
 	.delete([
 		saveHistory("talent"),
-		checkPermission("talent", "delete"),
 		controllerAsyncWithTransaction((request, response, session) =>
 			talentController.deleteTalent(request, response, session),
 		),

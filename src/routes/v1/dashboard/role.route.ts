@@ -13,15 +13,14 @@ const roleController = new RoleController(roleService);
 
 router
 	.route("/")
+	.all([checkPermission("role")])
 	.get([
-		checkPermission("role", "read"),
 		controllerAsync((request, response) =>
 			roleController.getAllRoles(request, response),
 		),
 	])
 	.post([
 		saveHistory("role"),
-		checkPermission("role", "create"),
 		controllerAsync((request, response) =>
 			roleController.createRole(request, response),
 		),
@@ -29,22 +28,20 @@ router
 
 router
 	.route("/:id")
+	.all([checkPermission("role")])
 	.get([
-		checkPermission("role", "read"),
 		controllerAsync((request, response) =>
 			roleController.getSingleRole(request, response),
 		),
 	])
 	.put([
 		saveHistory("role"),
-		checkPermission("role", "update"),
 		controllerAsync((request, response) =>
 			roleController.updateRole(request, response),
 		),
 	])
 	.delete([
 		saveHistory("role"),
-		checkPermission("role", "delete"),
 		controllerAsync((request, response) =>
 			roleController.deleteRole(request, response),
 		),

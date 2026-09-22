@@ -13,15 +13,14 @@ const gerneController = new GenreController(genreService);
 
 router
 	.route("/")
+	.all([checkPermission("genre")])
 	.post([
 		saveHistory("genre"),
-		checkPermission("genre", "create"),
 		controllerAsync((request, response) =>
 			gerneController.createGenre(request, response),
 		),
 	])
 	.get([
-		checkPermission("genre", "read"),
 		controllerAsync((request, response) =>
 			gerneController.getAllGenres(request, response),
 		),
@@ -29,16 +28,15 @@ router
 
 router
 	.route("/:id")
+	.all(checkPermission("genre"))
 	.put([
 		saveHistory("genre"),
-		checkPermission("genre", "update"),
 		controllerAsync((request, response) =>
 			gerneController.updateGenre(request, response),
 		),
 	])
 	.delete([
 		saveHistory("genre"),
-		checkPermission("genre", "delete"),
 		controllerAsync((request, response) =>
 			gerneController.deleteGenre(request, response),
 		),

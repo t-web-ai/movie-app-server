@@ -16,15 +16,15 @@ const adminController = new AdminController(adminService);
 
 router
 	.route("/")
+	.all([checkPermission("admin")])
 	.get([
-		checkPermission("admin", "read"),
 		controllerAsync((request, response) =>
 			adminController.getAllAdmin(request, response),
 		),
 	])
 	.post([
 		saveHistory("admin"),
-		checkPermission("admin", "create"),
+		checkPermission("admin"),
 		controllerAsyncWithTransaction((request, response, session) =>
 			adminController.createAdmin(request, response, session),
 		),
@@ -32,22 +32,20 @@ router
 
 router
 	.route("/:id")
+	.all([checkPermission("admin")])
 	.get([
-		checkPermission("admin", "read"),
 		controllerAsync((request, response) =>
 			adminController.getSingleAdmin(request, response),
 		),
 	])
 	.put([
 		saveHistory("admin"),
-		checkPermission("admin", "update"),
 		controllerAsyncWithTransaction((request, response, session) =>
 			adminController.updateAdmin(request, response, session),
 		),
 	])
 	.delete([
 		saveHistory("admin"),
-		checkPermission("admin", "delete"),
 		controllerAsyncWithTransaction((request, response, session) =>
 			adminController.deleteAdmin(request, response, session),
 		),

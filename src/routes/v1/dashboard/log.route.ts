@@ -12,14 +12,13 @@ const logController = new LogController(logService);
 
 router
 	.route("/")
+	.all([checkPermission("log")])
 	.get([
-		checkPermission("log", "read"),
 		controllerAsync((request, response) =>
 			logController.getAllLogs(request, response),
 		),
 	])
 	.delete([
-		checkPermission("log", "delete"),
 		controllerAsync((request, response) =>
 			logController.deleteAllLogs(request, response),
 		),
@@ -27,8 +26,8 @@ router
 
 router
 	.route("/:id")
+	.all([checkPermission("log")])
 	.delete([
-		checkPermission("log", "delete"),
 		controllerAsync((request, response) =>
 			logController.deleteLog(request, response),
 		),

@@ -17,15 +17,14 @@ const movieController = new MovieController(movieService);
 
 router
 	.route("/")
+	.all([checkPermission("movie")])
 	.get([
-		checkPermission("movie", "read"),
 		controllerAsync((request, response) =>
 			movieController.getAllMovies(request, response),
 		),
 	])
 	.post([
 		saveHistory("movie"),
-		checkPermission("movie", "create"),
 		uploadImage.single("image"),
 		controllerAsyncWithTransaction((request, response, session) =>
 			movieController.createMovie(request, response, session),
@@ -34,15 +33,14 @@ router
 
 router
 	.route("/:id")
+	.all([checkPermission("movie")])
 	.get([
-		checkPermission("movie", "read"),
 		controllerAsync((request, response) =>
 			movieController.getSingleMovie(request, response),
 		),
 	])
 	.put([
 		saveHistory("movie"),
-		checkPermission("movie", "update"),
 		uploadImage.single("image"),
 		controllerAsyncWithTransaction((request, response, session) =>
 			movieController.updateMovie(request, response, session),
@@ -50,7 +48,6 @@ router
 	])
 	.delete([
 		saveHistory("movie"),
-		checkPermission("movie", "delete"),
 		controllerAsyncWithTransaction((request, response, session) =>
 			movieController.deleteMovie(request, response, session),
 		),

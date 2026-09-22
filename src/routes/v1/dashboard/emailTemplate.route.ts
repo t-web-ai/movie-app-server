@@ -18,8 +18,8 @@ const emailTemplateController = new EmailTemplateController(
 
 router
 	.route("/")
+	.all([checkPermission("email-template")])
 	.get([
-		checkPermission("email-template", "read"),
 		controllerAsync((request, response) =>
 			emailTemplateController.getAllEmailTemplates(request, response),
 		),
@@ -27,15 +27,14 @@ router
 
 router
 	.route("/:id")
+	.all([checkPermission("email-template")])
 	.get([
-		checkPermission("email-template", "read"),
 		controllerAsync((request, response) =>
 			emailTemplateController.getSingleEmailTemplate(request, response),
 		),
 	])
 	.put([
 		saveHistory("email template"),
-		checkPermission("email-template", "update"),
 		controllerAsyncWithTransaction((request, response, session) =>
 			emailTemplateController.updateEmailTemplate(request, response, session),
 		),

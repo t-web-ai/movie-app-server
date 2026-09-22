@@ -16,15 +16,14 @@ const emailSettingController = new EmailSettingController(emailSettingService);
 
 router
 	.route("/")
+	.all([checkPermission("email-setting")])
 	.get([
-		checkPermission("email-setting", "read"),
 		controllerAsync((request, response) =>
 			emailSettingController.getEmailSetting(request, response),
 		),
 	])
 	.put([
 		saveHistory("email setting"),
-		checkPermission("email-setting", "update"),
 		controllerAsyncWithTransaction((request, response, session) =>
 			emailSettingController.updateEmailSetting(request, response, session),
 		),
