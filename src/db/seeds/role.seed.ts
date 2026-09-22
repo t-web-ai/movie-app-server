@@ -40,6 +40,9 @@ const roles: Partial<RoleDocument>[] = [
 
 			PERMISSION.EMAIL_TEMPLATE_READ,
 			PERMISSION.EMAIL_TEMPLATE_UPDATE,
+
+			PERMISSION.LOG_READ,
+			PERMISSION.LOG_DELETE,
 		],
 	},
 	{
@@ -54,6 +57,7 @@ const roles: Partial<RoleDocument>[] = [
 			PERMISSION.GENRE_READ,
 			PERMISSION.EMAIL_SETTING_READ,
 			PERMISSION.EMAIL_TEMPLATE_READ,
+			PERMISSION.LOG_READ,
 		],
 	},
 ];

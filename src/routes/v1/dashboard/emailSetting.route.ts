@@ -4,6 +4,7 @@ import {
 	controllerAsync,
 	controllerAsyncWithTransaction,
 } from "../../../middlewares/handlers/controllerAsync.handler";
+import { saveHistory } from "../../../middlewares/history.middleware";
 import { checkPermission } from "../../../middlewares/permission.middleware";
 import EmailSettingRepository from "../../../repositories/emailSetting.repository";
 import EmailSetttingService from "../../../services/dashboard/emailSetting.service";
@@ -22,6 +23,7 @@ router
 		),
 	])
 	.put([
+		saveHistory("email setting"),
 		checkPermission("email-setting", "update"),
 		controllerAsyncWithTransaction((request, response, session) =>
 			emailSettingController.updateEmailSetting(request, response, session),
@@ -31,6 +33,7 @@ router
 router
 	.route("/test")
 	.post([
+		saveHistory("email setting"),
 		controllerAsync((request, response) =>
 			emailSettingController.testEmail(request, response),
 		),

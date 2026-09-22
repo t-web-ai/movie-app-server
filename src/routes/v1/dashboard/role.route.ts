@@ -1,6 +1,7 @@
 import { Router } from "express";
 import RoleController from "../../../controllers/dashboard/role.controller";
 import { controllerAsync } from "../../../middlewares/handlers/controllerAsync.handler";
+import { saveHistory } from "../../../middlewares/history.middleware";
 import { checkPermission } from "../../../middlewares/permission.middleware";
 import RoleRepository from "../../../repositories/role.repository";
 import RoleService from "../../../services/dashboard/role.service";
@@ -19,6 +20,7 @@ router
 		),
 	])
 	.post([
+		saveHistory("role"),
 		checkPermission("role", "create"),
 		controllerAsync((request, response) =>
 			roleController.createRole(request, response),
@@ -34,12 +36,14 @@ router
 		),
 	])
 	.put([
+		saveHistory("role"),
 		checkPermission("role", "update"),
 		controllerAsync((request, response) =>
 			roleController.updateRole(request, response),
 		),
 	])
 	.delete([
+		saveHistory("role"),
 		checkPermission("role", "delete"),
 		controllerAsync((request, response) =>
 			roleController.deleteRole(request, response),

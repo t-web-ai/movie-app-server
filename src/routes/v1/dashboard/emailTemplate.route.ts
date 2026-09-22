@@ -4,6 +4,7 @@ import {
 	controllerAsync,
 	controllerAsyncWithTransaction,
 } from "../../../middlewares/handlers/controllerAsync.handler";
+import { saveHistory } from "../../../middlewares/history.middleware";
 import { checkPermission } from "../../../middlewares/permission.middleware";
 import EmailTemplateRepository from "../../../repositories/emailTemplate.repository";
 import EmailTemplateService from "../../../services/dashboard/emailTemplate.service";
@@ -33,6 +34,7 @@ router
 		),
 	])
 	.put([
+		saveHistory("email template"),
 		checkPermission("email-template", "update"),
 		controllerAsyncWithTransaction((request, response, session) =>
 			emailTemplateController.updateEmailTemplate(request, response, session),

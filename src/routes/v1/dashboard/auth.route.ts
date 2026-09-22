@@ -6,14 +6,19 @@ import {
 	controllerAsyncWithTransaction,
 } from "../../../middlewares/handlers/controllerAsync.handler";
 import AdminRepository from "../../../repositories/admin.repository";
+import LogRepository from "../../../repositories/log.repository";
 import OTPRepository from "../../../repositories/otp.repository";
 import AuthService from "../../../services/dashboard/auth.service";
+import LogService from "../../../services/dashboard/log.service";
 import OTPService from "../../../services/dashboard/otp.service";
 
 const router = Router();
+const logRepository = new LogRepository();
+const logService = new LogService(logRepository);
+
 const adminRepository = new AdminRepository();
 const authService = new AuthService(adminRepository);
-const authController = new AuthController(authService);
+const authController = new AuthController(authService, logService);
 
 const otpRepository = new OTPRepository();
 const otpService = new OTPService(otpRepository, adminRepository);

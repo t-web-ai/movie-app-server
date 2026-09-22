@@ -4,6 +4,7 @@ import {
 	controllerAsync,
 	controllerAsyncWithTransaction,
 } from "../../../middlewares/handlers/controllerAsync.handler";
+import { saveHistory } from "../../../middlewares/history.middleware";
 import { checkPermission } from "../../../middlewares/permission.middleware";
 import { uploadImage } from "../../../middlewares/upload.middleware";
 import TalentRepository from "../../../repositories/talent.repository";
@@ -23,6 +24,7 @@ router
 		),
 	])
 	.post([
+		saveHistory("talent"),
 		checkPermission("talent", "create"),
 		uploadImage.single("image"),
 		controllerAsyncWithTransaction((request, response, session) =>
@@ -33,6 +35,7 @@ router
 router
 	.route("/:id")
 	.put([
+		saveHistory("talent"),
 		checkPermission("talent", "update"),
 		uploadImage.single("image"),
 		controllerAsyncWithTransaction((request, response, session) =>
@@ -40,6 +43,7 @@ router
 		),
 	])
 	.delete([
+		saveHistory("talent"),
 		checkPermission("talent", "delete"),
 		controllerAsyncWithTransaction((request, response, session) =>
 			talentController.deleteTalent(request, response, session),

@@ -1,4 +1,5 @@
 import type z from "zod";
+import type { ActionInput } from "../validators/schemas/auth.schema";
 
 export const ALLOWED_IMAGE_TYPES: z.core.util.MimeTypes[] = [
 	"image/webp",
@@ -8,3 +9,11 @@ export const ALLOWED_IMAGE_TYPES: z.core.util.MimeTypes[] = [
 export const LIMIT_IMAGE_SIZE = 0.1;
 export const TALENT_FILE_PATH = "/talents";
 export const MOVIE_FILE_PATH = "/movies";
+
+export const REQUEST_METHODS_MAP: Record<string, ActionInput> = {
+	POST: "create",
+	PATCH: "update",
+	PUT: "update",
+	DELETE: "delete",
+	GET: "read",
+};

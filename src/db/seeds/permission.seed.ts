@@ -133,6 +133,17 @@ const permissions: Partial<PermissionDocument>[] = [
 		resource: "email-template",
 		action: "update",
 	},
+
+	{
+		_id: PERMISSION.LOG_READ,
+		resource: "log",
+		action: "read",
+	},
+	{
+		_id: PERMISSION.LOG_DELETE,
+		resource: "log",
+		action: "delete",
+	},
 ];
 
 export async function seedPermission(session: ClientSession) {

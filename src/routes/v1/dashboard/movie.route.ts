@@ -4,6 +4,7 @@ import {
 	controllerAsync,
 	controllerAsyncWithTransaction,
 } from "../../../middlewares/handlers/controllerAsync.handler";
+import { saveHistory } from "../../../middlewares/history.middleware";
 import { checkPermission } from "../../../middlewares/permission.middleware";
 import { uploadImage } from "../../../middlewares/upload.middleware";
 import MovieRepository from "../../../repositories/movie.repository";
@@ -23,6 +24,7 @@ router
 		),
 	])
 	.post([
+		saveHistory("movie"),
 		checkPermission("movie", "create"),
 		uploadImage.single("image"),
 		controllerAsyncWithTransaction((request, response, session) =>
@@ -39,6 +41,7 @@ router
 		),
 	])
 	.put([
+		saveHistory("movie"),
 		checkPermission("movie", "update"),
 		uploadImage.single("image"),
 		controllerAsyncWithTransaction((request, response, session) =>
@@ -46,6 +49,7 @@ router
 		),
 	])
 	.delete([
+		saveHistory("movie"),
 		checkPermission("movie", "delete"),
 		controllerAsyncWithTransaction((request, response, session) =>
 			movieController.deleteMovie(request, response, session),

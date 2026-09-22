@@ -36,4 +36,7 @@ export const PERMISSION = {
 
 	EMAIL_TEMPLATE_READ: toObjectId("507f1f77bcf86cd799439023"),
 	EMAIL_TEMPLATE_UPDATE: toObjectId("507f1f77bcf86cd799439024"),
+
+	LOG_READ: toObjectId("507f1f77bcf86cd799439025"),
+	LOG_DELETE: toObjectId("507f1f77bcf86cd799439026"),
 };

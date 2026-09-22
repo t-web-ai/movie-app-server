@@ -2,6 +2,7 @@ export { Admin } from "./admin.model";
 export { EmailSetting } from "./emailSetting.model";
 export { EmailTemplate } from "./emailTemplate.model";
 export { Genre } from "./genre.model";
+export { Log } from "./log.model";
 export { Movie } from "./movie.model";
 export { OTP } from "./otp.model";
 export { Permission } from "./permission.model";
