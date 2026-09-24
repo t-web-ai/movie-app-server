@@ -31,7 +31,7 @@ class GenreRepository {
 		const genres = await Genre.find(filter)
 			.skip((paginationInput.page - 1) * paginationInput.limit)
 			.limit(paginationInput.limit)
-			.sort({ createdAt: "descending" })
+			.sort({ [paginationInput.sort]: paginationInput.order })
 			.lean();
 
 		return genres;

@@ -41,9 +41,7 @@ class LogRepository {
 				},
 			})
 			.limit(paginationInput.limit)
-			.sort({
-				createdAt: "descending",
-			})
+			.sort({ [paginationInput.sort]: paginationInput.order })
 			.lean();
 		return logs;
 	}

@@ -34,7 +34,7 @@ class AdminRepository {
 			})
 			.skip((paginationInput.page - 1) * paginationInput.limit)
 			.limit(paginationInput.limit)
-			.sort({ createdAt: "descending" })
+			.sort({ [paginationInput.sort]: paginationInput.order })
 			.lean();
 		return admins;
 	}

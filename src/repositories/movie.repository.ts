@@ -1,4 +1,4 @@
-import type { ClientSession, QueryFilter } from "mongoose";
+import type { ClientSession, QueryFilter, UpdateQuery } from "mongoose";
 import { Movie } from "../db/models";
 import type { MovieDocument, MovieSchemaType } from "../db/models/movie.model";
 import type {
@@ -18,7 +18,7 @@ class MovieRepository {
 			.populate("casts", "-createdAt -updatedAt -__v")
 			.populate("directors", "-createdAt -updatedAt -__v")
 			.populate("genres", "-createdAt -updatedAt -__v")
-			.sort({ createdAt: "descending" })
+			.sort({ [paginationInput.sort]: paginationInput.order })
 			.lean();
 
 		return movies;
@@ -32,7 +32,8 @@ class MovieRepository {
 		const movie = await Movie.findOne(filter)
 			.populate("casts", "-createdAt -updatedAt -__v")
 			.populate("directors", "-createdAt -updatedAt -__v")
-			.populate("genres", "-createdAt -updatedAt -__v");
+			.populate("genres", "-createdAt -updatedAt -__v")
+			.lean();
 		return movie;
 	}
 
@@ -48,7 +49,7 @@ class MovieRepository {
 
 	async findMovieAndUpdate(
 		filter: QueryFilter<MovieDocument>,
-		movieUpdateInput: MovieUpdateInput,
+		movieUpdateInput: UpdateQuery<MovieUpdateInput>,
 		session: ClientSession,
 	) {
 		const movie = await Movie.findOneAndUpdate(filter, movieUpdateInput, {

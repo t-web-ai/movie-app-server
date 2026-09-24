@@ -51,6 +51,7 @@ export const BaseMovieSchema = z.object({
 			}
 		}),
 	isSeries: z.enum(["true", "false"]).transform((v) => v === "true"),
+	viewCount: z.coerce.number().optional(),
 });
 
 export const MovieCreateSchema = z.discriminatedUnion(

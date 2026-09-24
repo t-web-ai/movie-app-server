@@ -1,5 +1,5 @@
 import type { ClientSession, QueryFilter, Types } from "mongoose";
-import { MOVIE_FILE_PATH } from "../../common/constants";
+import { MOVIE_FILE_PATH, TALENT_FILE_PATH } from "../../common/constants";
 import env from "../../config/env.config";
 import type { MovieSchemaType } from "../../db/models/movie.model";
 import { BadRequestError } from "../../helpers/errors/badRequest.error";
@@ -26,7 +26,7 @@ class MovieService {
 		const totalPages = Math.ceil(totalCount / paginationInput.limit);
 		return {
 			movies,
-			paginatin: {
+			pagination: {
 				foundCount: movies.length,
 				totalCount,
 				totalPages,
@@ -43,7 +43,36 @@ class MovieService {
 		const movie = await this.movieRepository.getMovie({ _id: id });
 		if (!movie) throw new NotFoundError("No movie");
 
-		return { movie };
+		return {
+			movie,
+			fileLocation: {
+				movie: `${env.FILE_LOCATION}${MOVIE_FILE_PATH}`,
+				talent: `${env.FILE_LOCATION}${TALENT_FILE_PATH}`,
+			},
+		};
+	}
+
+	async getSingleMovieDetails(id: Types.ObjectId, session: ClientSession) {
+		const movie = await this.movieRepository.getMovie({ _id: id });
+		if (!movie) throw new NotFoundError("No movie");
+
+		await this.movieRepository.findMovieAndUpdate(
+			{ _id: movie._id },
+			{
+				$inc: {
+					viewCount: 1,
+				},
+			},
+			session,
+		);
+
+		return {
+			movie,
+			fileLocation: {
+				movie: `${env.FILE_LOCATION}${MOVIE_FILE_PATH}`,
+				talent: `${env.FILE_LOCATION}${TALENT_FILE_PATH}`,
+			},
+		};
 	}
 
 	async createMovie({
@@ -125,6 +154,24 @@ class MovieService {
 
 		if (movie.image?.fileId) await deleteSingleFile(movie.image.fileId);
 		return { movie };
+	}
+
+	async getPopularMovies(filter: QueryFilter<MovieSchemaType>) {
+		const movies = await this.movieRepository.getAllMovies(
+			{
+				...filter,
+				viewCount: {
+					$gte: 3,
+				},
+			},
+			{
+				page: 1,
+				limit: 5,
+				sort: "viewCount",
+				order: "descending",
+			},
+		);
+		return { movies };
 	}
 }
 

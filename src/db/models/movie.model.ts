@@ -90,6 +90,10 @@ const MovieSchema = new Schema(
 			default: false,
 		},
 		seasons: [SeasonSchema],
+		viewCount: {
+			type: Number,
+			default: 0,
+		},
 	},
 	{
 		timestamps: true,

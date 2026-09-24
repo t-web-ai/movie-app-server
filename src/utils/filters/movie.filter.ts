@@ -28,12 +28,23 @@ export async function buildMovieFilter(
 		queryFilter.genres = { $in: genreIds };
 	}
 
+	if (filter.type) {
+		queryFilter.isSeries = {
+			$eq: filter.type === "series",
+		};
+	}
+
 	return queryFilter;
 }
 
 export const MovieFilterSchema = z.object({
 	search: z.string().trim().optional(),
 	genres: arrayable(ObjectIdSchema).optional(),
+	type: z
+		.enum(["movie", "series"], {
+			message: "Invalild type: must be movie or series",
+		})
+		.optional(),
 });
 
 export type MovieFilterType = z.infer<typeof MovieFilterSchema>;
