@@ -1,5 +1,5 @@
 import type { ClientSession, QueryFilter, Types } from "mongoose";
-import { TALENT_FILE_PATH } from "../../common/constants";
+import { MOVIE_FILE_PATH, TALENT_FILE_PATH } from "../../common/constants";
 import env from "../../config/env.config";
 import type {
 	TalentDocument,
@@ -117,6 +117,19 @@ class TalentService {
 		}
 
 		return { talent };
+	}
+
+	async getTalentDetails(filter: QueryFilter<TalentDocument>) {
+		const talent = await this.talentRepository.getTalent(filter);
+		if (!talent) throw new NotFoundError("No talent");
+
+		return {
+			talent,
+			fileLocation: {
+				movie: `${env.FILE_LOCATION}${MOVIE_FILE_PATH}`,
+				talent: `${env.FILE_LOCATION}${TALENT_FILE_PATH}`,
+			},
+		};
 	}
 }
 

@@ -28,7 +28,24 @@ class TalentRepository {
 	}
 
 	async getTalent(filter: QueryFilter<TalentDocument>) {
-		return await Talent.findOne(filter);
+		return await Talent.findOne(filter)
+			.populate({
+				path: "castMovies",
+				select: {
+					_id: 1,
+					name: 1,
+					image: 1,
+				},
+			})
+			.populate({
+				path: "directedMovies",
+				select: {
+					_id: 1,
+					name: 1,
+					image: 1,
+				},
+			})
+			.lean();
 	}
 
 	async updateTalent(
