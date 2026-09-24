@@ -14,14 +14,14 @@ import talentRoute from "./talent.route";
 const router = Router();
 
 router.use("/auth", authRoute);
-router.use("/admin", [authMiddleware, adminRoute]);
-router.use("/role", [authMiddleware, roleRoute]);
-router.use("/permission", [authMiddleware, permissionRoute]);
-router.use("/talent", [authMiddleware, talentRoute]);
-router.use("/genre", [authMiddleware, genreRoute]);
-router.use("/movie", [authMiddleware, movieRoute]);
+router.use("/admins", [authMiddleware, adminRoute]);
+router.use("/roles", [authMiddleware, roleRoute]);
+router.use("/permissions", [authMiddleware, permissionRoute]);
+router.use("/talents", [authMiddleware, talentRoute]);
+router.use("/genres", [authMiddleware, genreRoute]);
+router.use("/movies", [authMiddleware, movieRoute]);
 router.use("/email-setting", [authMiddleware, emailSettingRoute]);
-router.use("/email-template", [authMiddleware, emailTemplateRoute]);
-router.use("/log", [authMiddleware, logRoute]);
+router.use("/email-templates", [authMiddleware, emailTemplateRoute]);
+router.use("/logs", [authMiddleware, logRoute]);
 
 export default router;
