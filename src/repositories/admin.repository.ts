@@ -13,9 +13,7 @@ class AdminRepository {
 			.select({ ...(safe && { password: 0 }) })
 			.populate({
 				path: "role",
-				populate: {
-					path: "permissions",
-				},
+				select: { _id: 1, name: 1 },
 			})
 			.lean();
 		return admin;

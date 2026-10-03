@@ -63,8 +63,8 @@ function createEmailTransporterGetter(
 			!transporter ||
 			!isSameEmailSetting(currentEmailSetting, emailSetting)
 		) {
-			config.currentEmailSetting = emailSetting;
 			config.transporter = await createTransporter(emailSetting);
+			config.currentEmailSetting = emailSetting;
 		}
 
 		return config.transporter;

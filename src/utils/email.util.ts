@@ -1,11 +1,32 @@
-import type { Mail, SMTPSentMessageInfo } from "nodemailer";
+import { getEmailTransporter } from "../config/email.config";
 import type { EmailInput } from "../validators/schemas/email.schema";
+import logger from "./logger.util";
 
-export async function sendEmail(
-	emailTransporter: Mail<SMTPSentMessageInfo>,
-	{ from, to, subject, html }: EmailInput,
-) {
-	await emailTransporter.sendMail({ from, to, subject, html });
+export async function sendEmail(emailInputs: EmailInput[]) {
+	const emailTransporter = await getEmailTransporter();
+	if (emailTransporter) {
+		const promiseResults = await Promise.allSettled(
+			emailInputs.map(({ from, to, subject, html }) =>
+				emailTransporter.sendMail({ from, to, subject, html }),
+			),
+		);
+		const failedPromises = promiseResults.filter(
+			(promiseResult) => promiseResult.status === "rejected",
+		);
+
+		if (failedPromises.length) {
+			throw new AggregateError(
+				failedPromises.map((failedPromise) => failedPromise),
+				`${failedPromises.length} email(s) failed to send`,
+			);
+		}
+	}
+}
+
+export function sendEmailInBackground(emailInputs: EmailInput[]) {
+	sendEmail(emailInputs).catch((error) => {
+		logger.error(error, "failed to send");
+	});
 }
 
 export function interpolate(

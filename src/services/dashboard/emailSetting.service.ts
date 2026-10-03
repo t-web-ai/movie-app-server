@@ -1,5 +1,4 @@
 import type { ClientSession } from "mongoose";
-import { getEmailTransporter } from "../../config/email.config";
 import { BadRequestError } from "../../helpers/errors/badRequest.error";
 import { NotFoundError } from "../../helpers/errors/notFound.error";
 import type EmailSettingRepository from "../../repositories/emailSetting.repository";
@@ -39,10 +38,7 @@ class EmailSetttingService {
 	}
 
 	async testEmail(emailInput: EmailInput) {
-		const emailTransporter = await getEmailTransporter();
-		if (emailTransporter) {
-			await sendEmail(emailTransporter, emailInput);
-		}
+		await sendEmail([emailInput]);
 	}
 }
 

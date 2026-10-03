@@ -31,6 +31,15 @@ const EnvSchema = z.object({
 	APP_SUPPORT_EMAIL: z.email().trim(),
 
 	OTP_EXPIRES_IN: z.coerce.number().int().optional().default(10),
+
+	CORS_ORIGINS: z
+		.string()
+		.trim()
+		.transform((arg) =>
+			arg.split(",").map((origin) => {
+				return origin.trim();
+			}),
+		),
 });
 
 type EnvType = z.infer<typeof EnvSchema>;

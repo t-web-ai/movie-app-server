@@ -1,8 +1,5 @@
 import type { ClientSession } from "mongoose";
-import {
-	getEmailTemplate,
-	getEmailTransporter,
-} from "../../config/email.config";
+import { getEmailTemplate } from "../../config/email.config";
 import env from "../../config/env.config";
 import type {
 	forgot_password_otp_types,
@@ -51,7 +48,6 @@ class OTPService {
 			session,
 		);
 
-		const emailTransporter = await getEmailTransporter();
 		const emailTemplate = await getEmailTemplate("forgot_password_otp");
 
 		const emailInput = renderEmailTemplate<forgot_password_otp_types>(
@@ -67,9 +63,7 @@ class OTPService {
 			},
 		);
 
-		if (emailTransporter) {
-			await sendEmail(emailTransporter, emailInput);
-		}
+		await sendEmail([emailInput]);
 
 		return {
 			expireAt: otp.expireAt,
@@ -90,11 +84,11 @@ class OTPService {
 
 		if (!otp) throw new BadRequestError("You need to request a new OTP code");
 
-		if (otp.verified)
-			return { message: "You have already verified the OTP code" };
-
 		if (otp.code !== otpVerifyInput.code)
 			throw new BadRequestError("OTP code is not valid");
+
+		if (otp.verified)
+			return { message: "You have already verified the OTP code" };
 
 		await this.otpRepository.updateOTP(
 			{ _id: otp._id },
@@ -137,7 +131,6 @@ class OTPService {
 
 		await this.otpRepository.deleteOTP({ _id: otp._id }, session);
 
-		const emailTransporter = await getEmailTransporter();
 		const emailTemplate = await getEmailTemplate("password_updated_alert");
 
 		const emailInput = renderEmailTemplate<password_updated_alert_types>(
@@ -151,9 +144,8 @@ class OTPService {
 				supportEmail: env.APP_SUPPORT_EMAIL,
 			},
 		);
-		if (emailTransporter) {
-			await sendEmail(emailTransporter, emailInput);
-		}
+
+		sendEmail([emailInput]);
 	}
 }
 

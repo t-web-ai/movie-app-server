@@ -44,11 +44,11 @@ class RoleService {
 
 		if (!roleWithAdmins) throw new NotFoundError();
 
-		if (roleWithAdmins.admins.length > 0)
-			throw new BadRequestError("This role is taken by some admins");
-
 		if (roleWithAdmins?.type === "system")
 			throw new ForbiddenError("This is system role");
+
+		if (roleWithAdmins.admins.length > 0)
+			throw new BadRequestError("This role is taken by some admins");
 
 		const role = await this.roleRepository.deleteRole(filter);
 		return { role };

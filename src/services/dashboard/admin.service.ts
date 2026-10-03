@@ -1,8 +1,5 @@
 import type { ClientSession, QueryFilter, Types } from "mongoose";
-import {
-	getEmailTemplate,
-	getEmailTransporter,
-} from "../../config/email.config";
+import { getEmailTemplate } from "../../config/email.config";
 import env from "../../config/env.config";
 import type { AdminSchemaType } from "../../db/models/admin.model";
 import type {
@@ -12,7 +9,10 @@ import type {
 import { BadRequestError } from "../../helpers/errors/badRequest.error";
 import { NotFoundError } from "../../helpers/errors/notFound.error";
 import type AdminRepository from "../../repositories/admin.repository";
-import { renderEmailTemplate, sendEmail } from "../../utils/email.util";
+import {
+	renderEmailTemplate,
+	sendEmailInBackground,
+} from "../../utils/email.util";
 import type {
 	AdminCreateInput,
 	AdminUpdateInput,
@@ -66,7 +66,6 @@ class AdminService {
 		const admin = await this.adminRepository.deleteAdmin(id, session);
 		if (!admin) throw new NotFoundError("No Admin");
 
-		const emailTransporter = await getEmailTransporter();
 		const emailTemplate = await getEmailTemplate(
 			"account_deleted_confirmation",
 		);
@@ -81,9 +80,7 @@ class AdminService {
 			},
 		);
 
-		if (emailTransporter) {
-			await sendEmail(emailTransporter, emailInput);
-		}
+		sendEmailInBackground([emailInput]);
 
 		return {
 			admin: {
@@ -109,7 +106,6 @@ class AdminService {
 		);
 		if (!admin) throw new BadRequestError("Faild to create admin");
 
-		const emailTransporter = await getEmailTransporter();
 		const emailTemplate = await getEmailTemplate("admin_signup_success");
 		const emailInput = renderEmailTemplate<admin_signup_success_types>(
 			{
@@ -127,9 +123,7 @@ class AdminService {
 			},
 		);
 
-		if (emailTransporter) {
-			await sendEmail(emailTransporter, emailInput);
-		}
+		sendEmailInBackground([emailInput]);
 
 		return {
 			admin: {

@@ -13,16 +13,14 @@ export const errorHandler: ErrorRequestHandler = (
 	response,
 	_next,
 ) => {
-	console.log(error);
 	if (error instanceof HttpError) {
 		return errorResponse({
 			response,
 			status: error.status,
-			message: error.name,
+			message: error.message,
 			details: [
 				{
 					field: request.url,
-					message: error.message,
 				},
 			],
 		});
@@ -38,7 +36,7 @@ export const errorHandler: ErrorRequestHandler = (
 	if (error instanceof JsonWebTokenError) {
 		return errorResponse({
 			response,
-			status: HttpStatus.BAD_REQUEST,
+			status: HttpStatus.UNAUTHORIZED,
 			message: error.name,
 			details: error.message,
 		});
@@ -68,15 +66,14 @@ export const errorHandler: ErrorRequestHandler = (
 		return errorResponse({
 			response,
 			status: HttpStatus.BAD_REQUEST,
-			message: error.name,
-			details: error.message,
+			message: "Something went wrong",
 		});
 	}
 	if (error instanceof MulterError) {
 		return errorResponse({
 			response,
 			status: HttpStatus.BAD_REQUEST,
-			message: error.name,
+			message: "Failed to upload",
 			details: {
 				field: error.field,
 				message: error.message,
@@ -127,6 +124,15 @@ export const errorHandler: ErrorRequestHandler = (
 				status: HttpStatus.INTERNAL_SERVER_ERROR,
 				message: "An error occurred while sending the email.",
 			});
+	}
+
+	if (error instanceof AggregateError) {
+		return errorResponse({
+			response,
+			status: HttpStatus.INTERNAL_SERVER_ERROR,
+			message: "Failed to send email",
+			details: "Please try again later",
+		});
 	}
 
 	return errorResponse({

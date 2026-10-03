@@ -11,11 +11,11 @@ export function getRequestClientInfo(request: Request) {
 			agent: null,
 		};
 
-	const { os } = new UAParser(userAgent).getResult();
+	const { os, browser } = new UAParser(userAgent).getResult();
 
 	return {
 		ip: request.ip ?? null,
-		platform: os.name ?? null,
-		agent: userAgent,
+		platform: os?.name?.toString() ?? null,
+		agent: browser?.name?.toString() ?? null,
 	};
 }

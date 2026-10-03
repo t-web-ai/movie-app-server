@@ -32,19 +32,20 @@ router
 
 router
 	.route("/:id")
-	.all([checkPermission("admin")])
 	.get([
 		controllerAsync((request, response) =>
 			adminController.getSingleAdmin(request, response),
 		),
 	])
 	.put([
+		checkPermission("admin"),
 		saveHistory("admin"),
 		controllerAsyncWithTransaction((request, response, session) =>
 			adminController.updateAdmin(request, response, session),
 		),
 	])
 	.delete([
+		checkPermission("admin"),
 		saveHistory("admin"),
 		controllerAsyncWithTransaction((request, response, session) =>
 			adminController.deleteAdmin(request, response, session),
