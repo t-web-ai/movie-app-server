@@ -33,6 +33,20 @@ class TalentController {
 			data,
 		});
 	}
+	async getTalent(request: Request, response: Response) {
+		const { params } = request;
+		const { id } = validateSchema(IdSchema, params);
+
+		const data = await this.talentService.getTalent({
+			_id: id,
+		});
+
+		return successResponse({
+			response,
+			message: "Get a talent successfully",
+			data,
+		});
+	}
 	async updateTalent(
 		request: Request,
 		response: Response,

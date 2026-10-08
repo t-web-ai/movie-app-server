@@ -119,8 +119,21 @@ class TalentService {
 		return { talent };
 	}
 
-	async getTalentDetails(filter: QueryFilter<TalentDocument>) {
+	async getTalent(filter: QueryFilter<TalentDocument>) {
 		const talent = await this.talentRepository.getTalent(filter);
+		if (!talent) throw new NotFoundError("No talent");
+
+		return {
+			talent,
+			fileLocation: {
+				talent: `${env.FILE_LOCATION}${TALENT_FILE_PATH}`,
+			},
+		};
+	}
+
+	async getTalentWithRelatedFields(filter: QueryFilter<TalentDocument>) {
+		const talent =
+			await this.talentRepository.getTalentWithRelatedFields(filter);
 		if (!talent) throw new NotFoundError("No talent");
 
 		return {

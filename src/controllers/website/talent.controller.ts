@@ -29,11 +29,13 @@ class TalentController {
 		});
 	}
 
-	async getTalentDetails(request: Request, response: Response) {
+	async getTalentWithRelatedFields(request: Request, response: Response) {
 		const { params } = request;
 		const { id } = validateSchema(IdSchema, params);
 
-		const data = await this.talentService.getTalentDetails({ _id: id });
+		const data = await this.talentService.getTalentWithRelatedFields({
+			_id: id,
+		});
 
 		return successResponse({
 			response,

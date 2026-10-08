@@ -21,7 +21,7 @@ router
 	.route("/:id")
 	.get([
 		controllerAsync((request, response) =>
-			talentController.getTalentDetails(request, response),
+			talentController.getTalentWithRelatedFields(request, response),
 		),
 	]);
 

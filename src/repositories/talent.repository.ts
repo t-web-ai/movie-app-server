@@ -1,9 +1,7 @@
 import type { ClientSession, QueryFilter, Types } from "mongoose";
 import { Talent } from "../db/models";
-import type {
-	TalentDocument,
-	TalentSchemaType,
-} from "../db/models/talent.model";
+import type { TalentDocument } from "./../db/models/talent.model";
+import type { TalentSchemaType } from "../db/models/talent.model";
 import type { PaginationInput } from "../validators/schemas/pagination.schema";
 import type {
 	TalentCreateInput,
@@ -28,6 +26,10 @@ class TalentRepository {
 	}
 
 	async getTalent(filter: QueryFilter<TalentDocument>) {
+		return await Talent.findOne(filter).lean();
+	}
+
+	async getTalentWithRelatedFields(filter: QueryFilter<TalentDocument>) {
 		return await Talent.findOne(filter)
 			.populate({
 				path: "castMovies",

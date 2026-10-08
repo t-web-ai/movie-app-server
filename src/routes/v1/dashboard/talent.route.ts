@@ -34,6 +34,11 @@ router
 router
 	.route("/:id")
 	.all([checkPermission("talent")])
+	.get([
+		controllerAsync((request, response) =>
+			talentController.getTalent(request, response),
+		),
+	])
 	.put([
 		saveHistory("talent"),
 		uploadImage.single("image"),
