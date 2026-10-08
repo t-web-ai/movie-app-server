@@ -59,6 +59,19 @@ class GenreController {
 		});
 	}
 
+	async getSingleGenre(request: Request, response: Response) {
+		const { params } = request;
+		const { id } = validateSchema(IdSchema, params);
+
+		const data = await this.genreService.getSingleGenre(id);
+
+		return successResponse({
+			response,
+			message: "Get single genre successfully",
+			data,
+		});
+	}
+
 	async deleteGenre(request: Request, response: Response) {
 		const { params } = request;
 		const { id } = validateSchema(IdSchema, params);

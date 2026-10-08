@@ -1,4 +1,4 @@
-import type { QueryFilter } from "mongoose";
+import type { QueryFilter, Types } from "mongoose";
 import type {
 	GenreDocument,
 	GenreSchemaType,
@@ -55,6 +55,12 @@ class GenreService {
 				limit: paginationInput.limit,
 			},
 		};
+	}
+
+	async getSingleGenre(id: Types.ObjectId) {
+		const genre = await this.genreRepository.getGenre({ _id: id });
+		if (!genre) throw new NotFoundError("No genre");
+		return { genre };
 	}
 
 	async deleteGenre(filter: QueryFilter<GenreDocument>) {

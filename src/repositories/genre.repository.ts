@@ -37,6 +37,11 @@ class GenreRepository {
 		return genres;
 	}
 
+	async getGenre(filter: QueryFilter<GenreDocument>) {
+		const genre = await Genre.findOne(filter);
+		return genre;
+	}
+
 	async getAllGenresCount(filter: QueryFilter<GenreSchemaType>) {
 		return await Genre.countDocuments(filter);
 	}

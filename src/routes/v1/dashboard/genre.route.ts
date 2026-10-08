@@ -29,6 +29,11 @@ router
 router
 	.route("/:id")
 	.all(checkPermission("genre"))
+	.get([
+		controllerAsync((request, response) =>
+			gerneController.getSingleGenre(request, response),
+		),
+	])
 	.put([
 		saveHistory("genre"),
 		controllerAsync((request, response) =>
