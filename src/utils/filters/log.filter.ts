@@ -4,6 +4,7 @@ import { ObjectIdSchema } from "../../common/schema";
 import { Admin } from "../../db/models";
 import type { LogSchemaType } from "../../db/models/log.model";
 import { LogTypeSchema } from "../../validators/schemas/log.schema";
+import { buildDateRangeFilter } from "../filter.util";
 
 export async function buildLogFilter(
 	filter: LogFilterType,
@@ -49,6 +50,13 @@ export async function buildLogFilter(
 		}
 	}
 
+	buildDateRangeFilter({
+		queryFilter,
+		field: "createdAt",
+		createdAfter: filter.createdAfter,
+		createdBefore: filter.createdBefore,
+	});
+
 	return queryFilter;
 }
 
@@ -56,6 +64,8 @@ export const LogFilterSchema = z.object({
 	search: z.string().trim().optional(),
 	role: ObjectIdSchema.optional(),
 	type: LogTypeSchema.optional(),
+	createdBefore: z.coerce.date().optional(),
+	createdAfter: z.coerce.date().optional(),
 });
 
 export type LogFilterType = z.infer<typeof LogFilterSchema>;
