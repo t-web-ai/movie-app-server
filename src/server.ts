@@ -11,9 +11,10 @@ async function bootstrapApplication() {
 			logger.info(`server is running on port ${env.PORT}`);
 		});
 	} catch (error) {
-		logger.info(error);
-		process.exit(1);
+		logger.error(error);
 	}
 }
 
 bootstrapApplication();
+
+export default app;

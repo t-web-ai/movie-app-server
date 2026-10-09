@@ -1,4 +1,4 @@
-import { createServer } from "node:http";
+/// <reference path="./types/express.d.ts" />
 import cors from "cors";
 import express from "express";
 import morgan from "morgan";
@@ -8,7 +8,6 @@ import { errorHandler } from "./middlewares/handlers/error.handler";
 import router from "./routes";
 
 const app = express();
-const server = createServer(app);
 
 if (env.ENVIORNMENT === "developement") {
 	app.use(morgan("dev"));
@@ -27,4 +26,4 @@ app.get("/health", (req, res) => {
 app.use("/api", router);
 app.use(errorHandler);
 
-export default server;
+export default app;
