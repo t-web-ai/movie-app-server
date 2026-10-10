@@ -13,6 +13,15 @@ export const errorHandler: ErrorRequestHandler = (
 	response,
 	_next,
 ) => {
+	console.error("[Error Handler]", {
+		method: request.method,
+		url: request.originalUrl,
+		name: error instanceof Error ? error.name : "Unknown Error",
+		message: error instanceof Error ? error.message : String(error),
+		stack: error instanceof Error ? error.stack : undefined,
+		code: (error as { code?: unknown })?.code,
+	});
+
 	if (error instanceof HttpError) {
 		return errorResponse({
 			response,
