@@ -1,3 +1,4 @@
+import { escapeRegExp } from "lodash";
 import type { QueryFilter } from "mongoose";
 import z from "zod";
 import type { GenreDocument } from "../../db/models/genre.model";
@@ -8,7 +9,8 @@ export function buildGenreFilter(
 	const queryFilter: QueryFilter<GenreDocument> = {};
 
 	if (filter.search) {
-		queryFilter.name = { $regex: filter.search, $options: "i" };
+		const search = escapeRegExp(filter.search);
+		queryFilter.name = { $regex: search, $options: "i" };
 	}
 
 	return queryFilter;

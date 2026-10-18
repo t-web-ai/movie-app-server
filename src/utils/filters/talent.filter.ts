@@ -1,3 +1,4 @@
+import { escapeRegExp } from "lodash";
 import type { QueryFilter } from "mongoose";
 import z from "zod";
 import type { TalentSchemaType } from "../../db/models/talent.model";
@@ -7,7 +8,8 @@ export function buildTalentFilter(
 ): QueryFilter<TalentSchemaType> {
 	const queryFilter: QueryFilter<TalentSchemaType> = {};
 	if (filter.search) {
-		queryFilter.$or = [{ name: { $regex: filter.search, $options: "i" } }];
+		const search = escapeRegExp(filter.search);
+		queryFilter.$or = [{ name: { $regex: search, $options: "i" } }];
 	}
 	return queryFilter;
 }
