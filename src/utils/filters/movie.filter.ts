@@ -1,3 +1,4 @@
+import { escapeRegExp } from "lodash";
 import type { QueryFilter } from "mongoose";
 import z from "zod";
 import { arrayable, ObjectIdSchema } from "../../common/schema";
@@ -10,14 +11,15 @@ export async function buildMovieFilter(
 	const queryFilter: QueryFilter<MovieSchemaType> = {};
 
 	if (filter.search) {
+		const search = escapeRegExp(filter.search);
 		const talents = await Talent.find(
-			{ name: { $regex: filter.search, $options: "i" } },
+			{ name: { $regex: search, $options: "i" } },
 			{ _id: 1 },
 		);
 		const talentIds = talents.map((talent) => talent._id.toString());
 
 		queryFilter.$or = [
-			{ name: { $regex: filter.search, $options: "i" } },
+			{ name: { $regex: search, $options: "i" } },
 			{ casts: { $in: talentIds } },
 			{ directors: { $in: talentIds } },
 		];

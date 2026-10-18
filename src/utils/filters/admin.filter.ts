@@ -1,3 +1,4 @@
+import { escapeRegExp } from "lodash";
 import type { QueryFilter } from "mongoose";
 import z from "zod";
 import { ObjectIdSchema } from "../../common/schema";
@@ -9,7 +10,8 @@ export function buildAdminFilterClause(
 ): QueryFilter<AdminSchemaType> {
 	const queryFilter: QueryFilter<AdminSchemaType> = {};
 	if (filter.search) {
-		buildSearchFilter(queryFilter, filter.search, ["name", "email"]);
+		const search = escapeRegExp(filter.search);
+		buildSearchFilter(queryFilter, search, ["name", "email"]);
 	}
 
 	if (filter.status) {

@@ -1,7 +1,9 @@
+import { escapeRegExp } from "lodash";
 import type { QueryFilter } from "mongoose";
 import z from "zod";
 import { ObjectIdSchema } from "../../common/schema";
 import { Admin } from "../../db/models";
+import type { AdminSchemaType } from "../../db/models/admin.model";
 import type { LogSchemaType } from "../../db/models/log.model";
 import { LogTypeSchema } from "../../validators/schemas/log.schema";
 import { buildDateRangeFilter } from "../filter.util";
@@ -11,31 +13,23 @@ export async function buildLogFilter(
 ): Promise<QueryFilter<LogSchemaType>> {
 	const queryFilter: QueryFilter<LogSchemaType> = {};
 
-	if (filter.search) {
-		const admins = await Admin.find(
-			{
-				$or: [
-					{ name: { $regex: filter.search, $options: "i" } },
-					{ email: { $regex: filter.search, $options: "i" } },
-				],
-			},
-			{ _id: 1 },
-		);
-		const adminIds = admins.map((admin) => admin._id.toString());
+	const adminFilter: QueryFilter<AdminSchemaType> = {};
 
-		queryFilter.$or = [{ admin: { $in: adminIds } }];
+	if (filter.search) {
+		const search = escapeRegExp(filter.search);
+		adminFilter.$or = [
+			{ name: { $regex: search, $options: "i" } },
+			{ email: { $regex: search, $options: "i" } },
+		];
 	}
 
 	if (filter.role) {
-		const admins = await Admin.find(
-			{
-				role: { $eq: filter.role },
-			},
-			{ _id: 1 },
-		);
-		const adminIds = admins.map((admin) => admin._id.toString());
+		adminFilter.role = filter.role;
+	}
 
-		queryFilter.$or = [{ admin: { $in: adminIds } }];
+	if (Object.keys(adminFilter).length) {
+		const admins = await Admin.find(adminFilter, { _id: 1 });
+		queryFilter.admin = { $in: admins.map((admin) => admin._id.toString()) };
 	}
 
 	if (filter.type) {
