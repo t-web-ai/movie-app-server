@@ -3,19 +3,11 @@ import { UAParser } from "ua-parser-js";
 
 export function getRequestClientInfo(request: Request) {
 	const userAgent = request.headers["user-agent"];
-
-	if (!userAgent)
-		return {
-			ip: request.ip ?? null,
-			platform: null,
-			agent: null,
-		};
-
-	const { os, browser } = new UAParser(userAgent).getResult();
+	const result = userAgent ? new UAParser(userAgent).getResult() : null;
 
 	return {
 		ip: request.ip ?? null,
-		platform: os?.name?.toString() ?? null,
-		agent: browser?.name?.toString() ?? null,
+		platform: result?.os.name ?? null,
+		agent: result?.browser.name ?? null,
 	};
 }
